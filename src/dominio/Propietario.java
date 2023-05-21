@@ -14,8 +14,5 @@ public class Propietario extends Usuario{
 
     public void setSaldo(int saldo) {
         this.saldo = saldo;
-    }
-    
-    
-    
+    }   
 }

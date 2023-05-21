@@ -11,8 +11,6 @@ public abstract class Usuario {
         this.nombreCompleto = nombreCompleto;
     }
     
-   
-
     public String getCedula() {
         return cedula;
     }

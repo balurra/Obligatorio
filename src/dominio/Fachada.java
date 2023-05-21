@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Fachada {
     private static Fachada instancia = new Fachada();
-    
     private SistemaPeaje sistemaPeaje = new SistemaPeaje();
     private SistemaUsuario sistemaUsuario = new SistemaUsuario();
     
@@ -43,10 +42,4 @@ public class Fachada {
     public void agregarBonificacion(Bonificacion bonificacion) {
         sistemaPeaje.agregarBonificacion(bonificacion);
     }
-    
-    
-    
-    
-    
-    
 }

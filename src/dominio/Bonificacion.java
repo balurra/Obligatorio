@@ -6,5 +6,4 @@ public class Bonificacion {
     public Bonificacion(String nombre) {
         this.nombre=nombre;
     }
-    
 }
