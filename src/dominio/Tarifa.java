@@ -24,7 +24,4 @@ public class Tarifa {
     public void setCategoriaVehiculo(Categoria categoriaVehiculo) {
         this.categoriaVehiculo = categoriaVehiculo;
     }
-    
-    
-    
 }

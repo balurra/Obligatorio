@@ -44,14 +44,8 @@ public class Puesto {
         }}
         return true;
     }
-        
 
     public ArrayList<Tarifa> getTarifas() {
         return tarifas;
     }
-    
-    
-
-    
-    
 }

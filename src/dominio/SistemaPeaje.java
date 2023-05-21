@@ -10,16 +10,13 @@ public class SistemaPeaje {
     
     public void agregarPuesto(Puesto puesto) {
         if (validarListaPuestos(puesto) && puesto.validarListaTarifas(puesto.getTarifas())
-                && validarListaCategoriaTarifas(puesto.getTarifas())) {
+            && validarListaCategoriaTarifas(puesto.getTarifas())) {
             puestos.add(puesto);
         }
     }
 
     private boolean validarListaPuestos(Puesto puesto) {
-        if (puestos.contains(puesto)) {
-            return false;
-        }
-        return true;
+        return puestos.contains(puesto);
     }
     
     public void agregarVehiculo(Vehiculo vehiculo) {
@@ -29,7 +26,7 @@ public class SistemaPeaje {
     }
 
     private boolean validarListaVehiculos(Vehiculo vehiculo) {
-        return !vehiculos.contains(vehiculo);
+        return vehiculos.contains(vehiculo);
     }
    
     public Categoria agregarCategoria(Categoria categoria) {
@@ -40,7 +37,7 @@ public class SistemaPeaje {
     }
 
     private boolean validarListaCategorias(Categoria categoria) {
-        return !categorias.contains(categoria);
+        return categorias.contains(categoria);
     }
     
     public void agregarBonificacion(Bonificacion bonificacion) {
@@ -50,11 +47,11 @@ public class SistemaPeaje {
     }
 
     private boolean validarListaBonificaciones(Bonificacion bonificacion) {
-        return !bonificaciones.contains(bonificacion);
+        return bonificaciones.contains(bonificacion);
     }
 
     private boolean validarListaCategoriaTarifas(ArrayList<Tarifa> tarifas) {
-        if(tarifas==null){
+        if(tarifas == null || tarifas.isEmpty()){
             return true;
         }
         for(Tarifa t:tarifas){

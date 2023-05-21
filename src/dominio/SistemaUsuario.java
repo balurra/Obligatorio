@@ -13,10 +13,7 @@ public class SistemaUsuario {
     }
 
     private boolean validarListaPropietarios(Propietario propietario) {
-        if (propietarios.contains(propietario)) {
-            return false;
-        }
-        return true;
+        return propietarios.contains(propietario);
     }
     
     public void agregarAdministrador(Administrador admin) {
@@ -26,10 +23,7 @@ public class SistemaUsuario {
     }
 
     private boolean validarListaAdministradores(Administrador admin) {
-        if (administradores.contains(admin)) {
-            return false;
-        }
-        return true;
+        return administradores.contains(admin);
     }
 
     public ArrayList<Propietario> getPropietarios() {
@@ -39,7 +33,4 @@ public class SistemaUsuario {
     public ArrayList<Administrador> getAdministradores() {
         return administradores;
     }
-    
-    
-    
 }
