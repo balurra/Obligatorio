@@ -1,41 +1,41 @@
 package inicio;
 
-import dominio.Administrador;
-import dominio.Bonificacion;
-import dominio.Categoria;
+import dominio.usuario.Administrador;
+import dominio.peaje.Bonificacion;
+import dominio.peaje.CatVehiculo;
 import dominio.Fachada;
-import dominio.Propietario;
-import dominio.Puesto;
-import dominio.Tarifa;
-import dominio.Vehiculo;
+import dominio.usuario.Propietario;
+import dominio.peaje.Puesto;
+import dominio.peaje.Tarifa;
+import dominio.peaje.Vehiculo;
 import java.util.ArrayList;
 
 public class DatosPrueba {
     public static void cargar(){
         Fachada logica = Fachada.getInstancia();
         //-------------------------------------------------USUARIOS ADMIN-------------------------------------------------
-        logica.agregarAdministrador(new Administrador("34663085","Michelle Lazcano","mlazcano"));
-        logica.agregarAdministrador(new Administrador("49808351","Nicolas Urraburu","nurraburu"));
-        logica.agregarAdministrador(new Administrador("27342119","Juan Perez","jp23"));
+        logica.agregarUsuario(new Administrador("50882785","12345","Michelle Lazcano","mlazcano"));
+        logica.agregarUsuario(new Administrador("49808351","12345","Nicolas Urraburu","nurraburu"));
+        logica.agregarUsuario(new Administrador("27342119","12345","Juan Pérez","jperez"));
         
         //-----------------------------------------------USUARIOS PROPIETARIOS-----------------------------------------------
-        logica.agregarPropietario(new Propietario("25736424","Micaela Aguilar","ma321",2000));
-        logica.agregarPropietario(new Propietario("17394758","Ana Ruiz","ruizana",0));
-        logica.agregarPropietario(new Propietario("18467373","Pablo González","pg2023",5000));
-        logica.agregarPropietario(new Propietario("23746551","Joaquín Álvarez","1152023j.a",23000));
-        logica.agregarPropietario(new Propietario("33256986","Roberto Rodríguez","r_r_23",28500));
-        logica.agregarPropietario(new Propietario("12387645","Joaquina Iglesias","2320joa",68200));
-        logica.agregarPropietario(new Propietario("27839422","Cecilia Sánchez","cecilia.san",490));
-        logica.agregarPropietario(new Propietario("37845321","Ana Clara Santos","acs_79",33000));
-        logica.agregarPropietario(new Propietario("48959877","Óscar Cruz","cruz84",0));
-        logica.agregarPropietario(new Propietario("24384969","Tobías González","tg2000",230));
+        logica.agregarUsuario(new Propietario("25736424","12345","Micaela Aguilar","ma321",2000));
+        logica.agregarUsuario(new Propietario("17394758","12345","Ana Ruiz","ruizana",0));
+        logica.agregarUsuario(new Propietario("18467373","12345","Pablo González","pg2023",5000));
+        logica.agregarUsuario(new Propietario("23746551","12345","Joaquín Álvarez","1152023j.a",23000));
+        logica.agregarUsuario(new Propietario("33256986","12345","Roberto Rodríguez","r_r_23",28500));
+        logica.agregarUsuario(new Propietario("12387645","12345","Joaquina Iglesias","2320joa",68200));
+        logica.agregarUsuario(new Propietario("27839422","12345","Cecilia Sánchez","cecilia.san",490));
+        logica.agregarUsuario(new Propietario("37845321","12345","Ana Clara Santos","acs_79",33000));
+        logica.agregarUsuario(new Propietario("48959877","12345","Óscar Cruz","cruz84",0));
+        logica.agregarUsuario(new Propietario("24384969","12345","Tobías González","tg2000",230));
         
         //------------------------CATEGORÍAS DE VEHÍCULOS------------------------
-        Categoria c1 = logica.agregarCategoria(new Categoria("Automóvil"));
-        Categoria c2 = logica.agregarCategoria(new Categoria("Motocicleta"));
-        Categoria c3 = logica.agregarCategoria(new Categoria("Bus"));
-        Categoria c4 = logica.agregarCategoria(new Categoria("Microbus"));
-        Categoria c5 = logica.agregarCategoria(new Categoria("Cuatriciclo"));
+        CatVehiculo c1 = logica.agregarCategoria(new CatVehiculo("Automóvil"));
+        CatVehiculo c2 = logica.agregarCategoria(new CatVehiculo("Motocicleta"));
+        CatVehiculo c3 = logica.agregarCategoria(new CatVehiculo("Bus"));
+        CatVehiculo c4 = logica.agregarCategoria(new CatVehiculo("Microbus"));
+        CatVehiculo c5 = logica.agregarCategoria(new CatVehiculo("Cuatriciclo"));
         
         //----------LISTAS DE TARIFAS PARA PUESTOS----------
         Tarifa t11 = new Tarifa(200,c1);

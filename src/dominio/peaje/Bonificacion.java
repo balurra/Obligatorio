@@ -1,4 +1,4 @@
-package dominio;
+package dominio.peaje;
 
 public class Bonificacion {
     private String nombre;

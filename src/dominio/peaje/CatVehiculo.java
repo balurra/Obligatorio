@@ -1,9 +1,9 @@
-package dominio;
+package dominio.peaje;
 
-public class Categoria {
+public class CatVehiculo {
     private String nombre;
 
-    public Categoria(String nombre) {
+    public CatVehiculo(String nombre) {
         this.nombre = nombre;
     }
 

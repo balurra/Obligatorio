@@ -1,10 +1,10 @@
-package dominio;
+package dominio.peaje;
 
 public class Tarifa {
     private int monto;
-    private Categoria categoriaVehiculo;
+    private CatVehiculo categoriaVehiculo;
 
-    public Tarifa(int monto, Categoria categoriaVehiculo) {
+    public Tarifa(int monto, CatVehiculo categoriaVehiculo) {
         this.monto = monto;
         this.categoriaVehiculo = categoriaVehiculo;
     }
@@ -17,11 +17,11 @@ public class Tarifa {
         this.monto = monto;
     }
 
-    public Categoria getCategoriaVehiculo() {
+    public CatVehiculo getCategoriaVehiculo() {
         return categoriaVehiculo;
     }
 
-    public void setCategoriaVehiculo(Categoria categoriaVehiculo) {
+    public void setCategoriaVehiculo(CatVehiculo categoriaVehiculo) {
         this.categoriaVehiculo = categoriaVehiculo;
     }
 }
