@@ -28,9 +28,9 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lbl_username" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_cedula" min="-2" max="-2" attributes="0"/>
                           <Component id="lbl_password" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_username" alignment="0" pref="334" max="32767" attributes="0"/>
+                          <Component id="txt_cedula" alignment="0" pref="334" max="32767" attributes="0"/>
                           <Component id="pwd_password" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -47,9 +47,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="lbl_username" min="-2" max="-2" attributes="0"/>
+              <Component id="lbl_cedula" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txt_username" min="-2" pref="37" max="-2" attributes="0"/>
+              <Component id="txt_cedula" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbl_password" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -62,22 +62,22 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lbl_username">
+    <Component class="javax.swing.JLabel" name="lbl_cedula">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Yu Gothic UI Semilight" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Usuario:"/>
+        <Property name="text" type="java.lang.String" value="C&#xe9;dula:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_username">
+    <Component class="javax.swing.JTextField" name="txt_cedula">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Yu Gothic UI Semilight" size="18" style="0"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_usernameActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_cedulaActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_password">

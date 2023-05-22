@@ -18,8 +18,8 @@ public class Fachada {
         return instancia;
     }
     
-    public Usuario login(String username, String password) {
-        return sistemaUsuario.login(username, password);
+    public Usuario login(String cedula, String password) {
+        return sistemaUsuario.login(cedula, password);
     }
 
     public void agregarUsuario(Usuario usuario) {

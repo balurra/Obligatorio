@@ -3,8 +3,8 @@ package dominio.usuario;
 public class Propietario extends Usuario{
     private int saldo;
 
-    public Propietario(String cedula, String password, String nombreCompleto, String username, int saldo) {
-        super(cedula, password, nombreCompleto, username);
+    public Propietario(String cedula, String password, String nombreCompleto, int saldo) {
+        super(cedula, password, nombreCompleto);
         this.saldo = saldo;
     }
 

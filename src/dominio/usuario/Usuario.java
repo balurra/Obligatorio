@@ -4,22 +4,17 @@ public abstract class Usuario {
     private String cedula;
     private String password;
     private String nombreCompleto;
-    private String username;
 
-    public Usuario(String cedula, String password, String nombreCompleto, String username) {
+    public Usuario(String cedula, String password, String nombreCompleto) {
         this.cedula = cedula;
         this.password = password;
         this.nombreCompleto = nombreCompleto;
-        this.username = username;
     }
     
     public boolean validarUsuario() {
         return validarNombre() &&
-               validarPassword();
-    }
-    
-    public String getUsername() {
-        return username;
+               validarPassword() &&
+               validarCedula();
     }
     
     public String getCedula() {
@@ -34,10 +29,6 @@ public abstract class Usuario {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getNombreCompleto() {
         return nombreCompleto;
     }
@@ -49,14 +40,20 @@ public abstract class Usuario {
     @Override
     public boolean equals(Object obj) {
         Usuario otro = (Usuario)obj;
-        return this.username.equals(otro.username);
+        return this.cedula.equals(otro.cedula);
     }
     
     private boolean validarNombre() {
-        return username != null && !username.isEmpty();
+        return nombreCompleto != null && !nombreCompleto.isEmpty();
     }
 
     private boolean validarPassword() {
         return password != null && !password.isEmpty();
+    }
+    
+    private boolean validarCedula() {
+        return cedula != null &&
+               !cedula.isEmpty() &&
+               cedula.length() == 8;
     }
 }
