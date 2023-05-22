@@ -13,39 +13,48 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_salir = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        mnu_item_login = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        mnu_item_salir = new javax.swing.JMenuItem();
+        mnu_ingresar = new javax.swing.JMenu();
+        mnu_item_loginAdmin = new javax.swing.JMenuItem();
+        mnu_item_loginProp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("Principal");
-
-        mnu_item_login.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        mnu_item_login.setText("Login");
-        mnu_item_login.addActionListener(new java.awt.event.ActionListener() {
+        btn_salir.setBackground(new java.awt.Color(0, 153, 153));
+        btn_salir.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
+        btn_salir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnu_item_loginActionPerformed(evt);
+                btn_salirActionPerformed(evt);
             }
         });
-        jMenu1.add(mnu_item_login);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.setBackground(new java.awt.Color(0, 153, 153));
 
-        jMenu2.setText("Aplicación");
+        mnu_ingresar.setBackground(new java.awt.Color(0, 153, 153));
+        mnu_ingresar.setForeground(new java.awt.Color(255, 255, 255));
+        mnu_ingresar.setText("Loguearme");
 
-        mnu_item_salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        mnu_item_salir.setText("Salir");
-        mnu_item_salir.addActionListener(new java.awt.event.ActionListener() {
+        mnu_item_loginAdmin.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        mnu_item_loginAdmin.setText("Soy administrador");
+        mnu_item_loginAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnu_item_salirActionPerformed(evt);
+                mnu_item_loginAdminActionPerformed(evt);
             }
         });
-        jMenu2.add(mnu_item_salir);
+        mnu_ingresar.add(mnu_item_loginAdmin);
 
-        jMenuBar1.add(jMenu2);
+        mnu_item_loginProp.setText("Soy propietario");
+        mnu_item_loginProp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnu_item_loginPropActionPerformed(evt);
+            }
+        });
+        mnu_ingresar.add(mnu_item_loginProp);
+
+        jMenuBar1.add(mnu_ingresar);
 
         setJMenuBar(jMenuBar1);
 
@@ -53,29 +62,44 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(260, Short.MAX_VALUE)
+                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addComponent(btn_salir)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnu_item_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnu_item_loginActionPerformed
-        login();
-    }//GEN-LAST:event_mnu_item_loginActionPerformed
+    private void mnu_item_loginAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnu_item_loginAdminActionPerformed
+        loginAdmin();
+    }//GEN-LAST:event_mnu_item_loginAdminActionPerformed
 
-    private void login() {
-        Login login = new Login(this, false);
+    private void loginAdmin() {
+        Login login = new LoginAdmin(this, false);
         login.setVisible(true);
     }
+    
+    private void mnu_item_loginPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnu_item_loginPropActionPerformed
+        loginProp();
+    }//GEN-LAST:event_mnu_item_loginPropActionPerformed
 
-    private void mnu_item_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnu_item_salirActionPerformed
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         salir();
-    }//GEN-LAST:event_mnu_item_salirActionPerformed
+    }//GEN-LAST:event_btn_salirActionPerformed
 
+    private void loginProp() {
+        Login login = new LoginProp(this, false);
+        login.setVisible(true);
+    }
+    
     private void salir() throws HeadlessException {
         int opcion = JOptionPane.showConfirmDialog(this, "¿Desea salir?");
         if (opcion == JOptionPane.YES_OPTION) {
@@ -84,10 +108,10 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JButton btn_salir;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem mnu_item_login;
-    private javax.swing.JMenuItem mnu_item_salir;
+    private javax.swing.JMenu mnu_ingresar;
+    private javax.swing.JMenuItem mnu_item_loginAdmin;
+    private javax.swing.JMenuItem mnu_item_loginProp;
     // End of variables declaration//GEN-END:variables
 }

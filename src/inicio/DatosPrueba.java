@@ -13,22 +13,23 @@ import java.util.ArrayList;
 public class DatosPrueba {
     public static void cargar(){
         Fachada logica = Fachada.getInstancia();
+        
         //-------------------------------------------------USUARIOS ADMIN-------------------------------------------------
-        logica.agregarUsuario(new Administrador("50882785","12345","Michelle Lazcano"));
-        logica.agregarUsuario(new Administrador("49808351","12345","Nicolas Urraburu"));
-        logica.agregarUsuario(new Administrador("27342119","12345","Juan Pérez"));
+        logica.registrarAdmin(new Administrador("50882785","12345","Michelle Lazcano"));
+        logica.registrarAdmin(new Administrador("49808351","12345","Nicolas Urraburu"));
+        logica.registrarAdmin(new Administrador("27342119","12345","Juan Pérez"));
         
         //-----------------------------------------------USUARIOS PROPIETARIOS-----------------------------------------------
-        logica.agregarUsuario(new Propietario("25736424","12345","Micaela Aguilar",2000));
-        logica.agregarUsuario(new Propietario("17394758","12345","Ana Ruiz",0));
-        logica.agregarUsuario(new Propietario("18467373","12345","Pablo González",5000));
-        logica.agregarUsuario(new Propietario("23746551","12345","Joaquín Álvarez",23000));
-        logica.agregarUsuario(new Propietario("33256986","12345","Roberto Rodríguez",28500));
-        logica.agregarUsuario(new Propietario("12387645","12345","Joaquina Iglesias",68200));
-        logica.agregarUsuario(new Propietario("27839422","12345","Cecilia Sánchez",490));
-        logica.agregarUsuario(new Propietario("37845321","12345","Ana Clara Santos",33000));
-        logica.agregarUsuario(new Propietario("48959877","12345","Óscar Cruz",0));
-        logica.agregarUsuario(new Propietario("24384969","12345","Tobías González",230));
+        logica.registrarProp(new Propietario("25736424","12345","Micaela Aguilar",2000));
+        logica.registrarProp(new Propietario("17394758","12345","Ana Ruiz",0));
+        logica.registrarProp(new Propietario("18467373","12345","Pablo González",5000));
+        logica.registrarProp(new Propietario("23746551","12345","Joaquín Álvarez",23000));
+        logica.registrarProp(new Propietario("33256986","12345","Roberto Rodríguez",28500));
+        logica.registrarProp(new Propietario("12387645","12345","Joaquina Iglesias",68200));
+        logica.registrarProp(new Propietario("27839422","12345","Cecilia Sánchez",490));
+        logica.registrarProp(new Propietario("37845321","12345","Ana Clara Santos",33000));
+        logica.registrarProp(new Propietario("48959877","12345","Óscar Cruz",0));
+        logica.registrarProp(new Propietario("24384969","12345","Tobías González",230));
         
         //------------------------CATEGORÍAS DE VEHÍCULOS------------------------
         CatVehiculo c1 = logica.agregarCategoria(new CatVehiculo("Automóvil"));

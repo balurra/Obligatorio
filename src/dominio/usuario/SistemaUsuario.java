@@ -1,32 +1,73 @@
 package dominio.usuario;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SistemaUsuario {
-    private ArrayList<Usuario> usuarios = new ArrayList<>();
+    private List<Propietario> propietarios = new ArrayList<>();
+    private List<Administrador> administradores = new ArrayList<>();
+    private List<Sesion> logueados = new ArrayList<>();
+
+    public Sesion loginProp(String cedula, String password) {
+        Sesion sesion = login(cedula, password, propietarios);
+        return sesion;
+    }
     
-    public Usuario login(String cedula, String password) {
-        Usuario usuario = null;
-        for (Usuario usu : usuarios) {
-            if (usu.getCedula().equals(cedula) &&
-                usu.getPassword().equals(password)) {
-                usuario = usu;
+    public Sesion loginAdmin(String cedula, String password) {
+        Sesion sesion = login(cedula, password, administradores);
+        return sesion;
+    }
+    
+    private Sesion login(String cedula, String password, List usuarios) {
+        Usuario usuario;
+        for (Object usuarioObj : usuarios) {
+            usuario = (Usuario) usuarioObj;
+            if (validarLogin(usuario, cedula, password)) {
+                Sesion sesion = new Sesion(usuario);
+                if (validarListaLogueados(sesion)) {
+                    logueados.add(sesion);
+                    return sesion;
+                }
             }
         }
-        return usuario;
+        return null;
+    }
+
+    private static boolean validarLogin(Usuario usuario, String cedula, String password) {
+        return usuario.getCedula().equals(cedula) &&
+               usuario.getPassword().equals(password);
+    }
+
+    public void registrarProp(Propietario prop) {
+        if (validarListaPropietarios(prop)) {
+            propietarios.add(prop);
+        }
     }
     
-    public void agregarUsuario(Usuario usuario) {
-        if (validarListaUsuarios(usuario)) {
-            usuarios.add(usuario);
+    public void registrarAdmin(Administrador admin) {
+        if (validarListaAdministradores(admin)) {
+            administradores.add(admin);
         }
     }
 
-    private boolean validarListaUsuarios(Usuario usuario) {
-        return !usuarios.contains(usuario) && usuario.validarUsuario();
+    private boolean validarListaPropietarios(Propietario prop) {
+        return !propietarios.contains(prop) && prop.validarUsuario();
+    }
+    
+    private boolean validarListaAdministradores(Administrador admin) {
+        return !administradores.contains(admin) && admin.validarUsuario();
+    }
+    
+    private boolean validarListaLogueados(Sesion sesion) {
+        for(Sesion s : logueados) {
+            if(s.getUsuario().equals(sesion.getUsuario())) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public ArrayList<Usuario> getUsuarios() {
-        return usuarios;
+    public List<Sesion> getLogueados() {
+        return logueados;
     }
 }

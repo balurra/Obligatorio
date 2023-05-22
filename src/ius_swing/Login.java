@@ -1,12 +1,10 @@
 package ius_swing;
 
-import dominio.Fachada;
-import dominio.usuario.Administrador;
-import dominio.usuario.Propietario;
+import dominio.usuario.Sesion;
 import dominio.usuario.Usuario;
 import javax.swing.JOptionPane;
 
-public class Login extends javax.swing.JDialog {
+public abstract class Login extends javax.swing.JDialog {
     public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -104,6 +102,8 @@ public class Login extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void login() {
+        boolean verificarTextosLogin = true;
+        
         String cedula = txt_cedula.getText();
         if (cedula.isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -111,6 +111,7 @@ public class Login extends javax.swing.JDialog {
                     "Ingresar cédula", 
                     "Error", 
                     JOptionPane.ERROR_MESSAGE);
+            verificarTextosLogin = false;
         }
         
         String password = String.valueOf(pwd_password.getPassword());
@@ -120,23 +121,24 @@ public class Login extends javax.swing.JDialog {
                     "Ingresar contraseña", 
                     "Error", 
                     JOptionPane.ERROR_MESSAGE);
+            verificarTextosLogin = false;
         }
         
-        Usuario usuario = Fachada.getInstancia().login(cedula, password);
-        if (usuario != null) {
-            if(usuario instanceof Propietario) {
-                TableroProp tableroProp = new TableroProp(null, false, (Propietario) usuario);
-                tableroProp.setVisible(true);
+        if (verificarTextosLogin) {
+            Sesion sesion = this.login(cedula, password);
+            if (sesion != null) {
+                this.mostrarProximaInterfaz(sesion.getUsuario());
+                dispose();
             } else {
-                TableroAdmin tableroAdmin = new TableroAdmin(null, false, (Administrador)usuario);
-                tableroAdmin.setVisible(true);
-            }
-        } else  {
-            JOptionPane.showMessageDialog(
-                    this, 
-                    "Datos incorrectos", 
-                    "Error", 
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Los datos son incorrectos o el usuario ya está logueado", //TODO: separar errores
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
+    
+    public abstract Sesion login(String cedula, String password);
+    public abstract void mostrarProximaInterfaz(Usuario usuario);
 }
