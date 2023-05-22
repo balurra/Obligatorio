@@ -1,12 +1,12 @@
-package dominio;
+package dominio.peaje;
 
 public class Vehiculo {
     private String matricula;
     private String modelo;
     private String color;
-    private Categoria categoria;
+    private CatVehiculo categoria;
 
-    public Vehiculo(String matricula, String modelo, String color, Categoria categoria) {
+    public Vehiculo(String matricula, String modelo, String color, CatVehiculo categoria) {
         this.matricula = matricula;
         this.modelo = modelo;
         this.color = color;
@@ -37,11 +37,11 @@ public class Vehiculo {
         this.color = color;
     }
 
-    public Categoria getCategoria() {
+    public CatVehiculo getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(CatVehiculo categoria) {
         this.categoria = categoria;
     }
 }

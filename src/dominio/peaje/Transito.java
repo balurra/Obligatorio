@@ -1,4 +1,4 @@
-package dominio;
+package dominio.peaje;
 
 public class Transito {
     

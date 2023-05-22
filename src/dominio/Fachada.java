@@ -1,5 +1,12 @@
 package dominio;
 
+import dominio.peaje.Bonificacion;
+import dominio.peaje.CatVehiculo;
+import dominio.peaje.Puesto;
+import dominio.peaje.SistemaPeaje;
+import dominio.usuario.SistemaUsuario;
+import dominio.peaje.Vehiculo;
+import dominio.usuario.Usuario;
 import java.util.ArrayList;
 
 public class Fachada {
@@ -10,21 +17,17 @@ public class Fachada {
     public static Fachada getInstancia() {
         return instancia;
     }
-
-    public void agregarPropietario(Propietario propietario) {
-        sistemaUsuario.agregarPropietario(propietario);
+    
+    public Usuario login(String username, String password) {
+        return sistemaUsuario.login(username, password);
     }
 
-    public void agregarAdministrador(Administrador admin) {
-        sistemaUsuario.agregarAdministrador(admin);
+    public void agregarUsuario(Usuario usuario) {
+        sistemaUsuario.agregarUsuario(usuario);
     }
 
-    public ArrayList<Propietario> getPropietarios() {
-        return sistemaUsuario.getPropietarios();
-    }
-
-    public ArrayList<Administrador> getAdministradores() {
-        return sistemaUsuario.getAdministradores();
+    public ArrayList<Usuario> getUsuarios() {
+        return sistemaUsuario.getUsuarios();
     }
 
     public void agregarPuesto(Puesto puesto) {
@@ -35,7 +38,7 @@ public class Fachada {
         sistemaPeaje.agregarVehiculo(vehiculo);
     }
 
-    public Categoria agregarCategoria(Categoria categoria) {
+    public CatVehiculo agregarCategoria(CatVehiculo categoria) {
         return sistemaPeaje.agregarCategoria(categoria);
     }
 

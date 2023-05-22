@@ -1,4 +1,4 @@
-package dominio;
+package dominio.peaje;
 
 import java.util.ArrayList;
 
@@ -32,17 +32,6 @@ public class Puesto {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    boolean validarListaTarifas(ArrayList<Tarifa> ts) {
-        if(ts==null){
-            return true;
-        }
-        for(Tarifa t:ts){
-            if (tarifas.contains(t)) {
-            return false;
-        }}
-        return true;
     }
 
     public ArrayList<Tarifa> getTarifas() {

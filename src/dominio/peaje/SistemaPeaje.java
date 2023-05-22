@@ -1,16 +1,16 @@
-package dominio;
+package dominio.peaje;
 
 import java.util.ArrayList;
 
 public class SistemaPeaje {
     private ArrayList<Puesto> puestos = new ArrayList<>();
     private ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-    private ArrayList<Categoria> categorias = new ArrayList<>();
+    private ArrayList<CatVehiculo> categorias = new ArrayList<>();
     private ArrayList<Bonificacion> bonificaciones = new ArrayList<>();
     
     public void agregarPuesto(Puesto puesto) {
-        if (validarListaPuestos(puesto) && puesto.validarListaTarifas(puesto.getTarifas())
-            && validarListaCategoriaTarifas(puesto.getTarifas())) {
+        if (validarListaPuestos(puesto) &&
+            validarListaCategoriaTarifas(puesto.getTarifas())) {
             puestos.add(puesto);
         }
     }
@@ -29,14 +29,14 @@ public class SistemaPeaje {
         return vehiculos.contains(vehiculo);
     }
    
-    public Categoria agregarCategoria(Categoria categoria) {
+    public CatVehiculo agregarCategoria(CatVehiculo categoria) {
         if (validarListaCategorias(categoria)) {
             categorias.add(categoria);
         }
         return categoria;
     }
 
-    private boolean validarListaCategorias(Categoria categoria) {
+    private boolean validarListaCategorias(CatVehiculo categoria) {
         return categorias.contains(categoria);
     }
     
