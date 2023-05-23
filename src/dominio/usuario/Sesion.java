@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Sesion {
     private Usuario usuario;
-    private Date fechaUlitmoIngreso = new Date();
+    private Date fechaUltIngreso = new Date();
 
     public Sesion(Usuario usuario) {
         this.usuario = usuario;
@@ -15,6 +15,6 @@ public class Sesion {
     }
 
     public Date getFechaUlitmoIngreso() {
-        return fechaUlitmoIngreso;
+        return fechaUltIngreso;
     }
 }

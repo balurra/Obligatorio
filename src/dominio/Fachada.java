@@ -1,9 +1,8 @@
 package dominio;
 
-import dominio.peaje.Bonificacion;
-import dominio.peaje.CatVehiculo;
 import dominio.peaje.Puesto;
 import dominio.peaje.SistemaPeaje;
+import dominio.peaje.TipoBonificacion;
 import dominio.usuario.SistemaUsuario;
 import dominio.peaje.Vehiculo;
 import dominio.usuario.Administrador;
@@ -40,19 +39,15 @@ public class Fachada {
         return sistemaUsuario.getLogueados();
     }
 
-    public void agregarPuesto(Puesto puesto) {
-        sistemaPeaje.agregarPuesto(puesto);
+    public Puesto agregarPuesto(Puesto puesto) {
+        return sistemaPeaje.agregarPuesto(puesto);
     }
 
     public void agregarVehiculo(Vehiculo vehiculo) {
         sistemaPeaje.agregarVehiculo(vehiculo);
     }
 
-    public CatVehiculo agregarCategoria(CatVehiculo categoria) {
-        return sistemaPeaje.agregarCategoria(categoria);
-    }
-
-    public void agregarBonificacion(Bonificacion bonificacion) {
-        sistemaPeaje.agregarBonificacion(bonificacion);
+    public void agregarTipoBonif(TipoBonificacion tipo) {
+        sistemaPeaje.agregarTipoBonif(tipo);
     }
 }

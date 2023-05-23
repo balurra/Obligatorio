@@ -7,6 +7,10 @@ public class SistemaUsuario {
     private List<Propietario> propietarios = new ArrayList<>();
     private List<Administrador> administradores = new ArrayList<>();
     private List<Sesion> logueados = new ArrayList<>();
+    
+    public List<Sesion> getLogueados() {
+        return logueados;
+    }
 
     public Sesion loginProp(String cedula, String password) {
         Sesion sesion = login(cedula, password, propietarios);
@@ -16,6 +20,18 @@ public class SistemaUsuario {
     public Sesion loginAdmin(String cedula, String password) {
         Sesion sesion = login(cedula, password, administradores);
         return sesion;
+    }
+    
+    public void registrarProp(Propietario prop) {
+        if (validarListaPropietarios(prop)) {
+            propietarios.add(prop);
+        }
+    }
+    
+    public void registrarAdmin(Administrador admin) {
+        if (validarListaAdministradores(admin)) {
+            administradores.add(admin);
+        }
     }
     
     private Sesion login(String cedula, String password, List usuarios) {
@@ -32,22 +48,10 @@ public class SistemaUsuario {
         }
         return null;
     }
-
+    
     private static boolean validarLogin(Usuario usuario, String cedula, String password) {
         return usuario.getCedula().equals(cedula) &&
                usuario.getPassword().equals(password);
-    }
-
-    public void registrarProp(Propietario prop) {
-        if (validarListaPropietarios(prop)) {
-            propietarios.add(prop);
-        }
-    }
-    
-    public void registrarAdmin(Administrador admin) {
-        if (validarListaAdministradores(admin)) {
-            administradores.add(admin);
-        }
     }
 
     private boolean validarListaPropietarios(Propietario prop) {
@@ -65,9 +69,5 @@ public class SistemaUsuario {
             }
         }
         return true;
-    }
-
-    public List<Sesion> getLogueados() {
-        return logueados;
     }
 }

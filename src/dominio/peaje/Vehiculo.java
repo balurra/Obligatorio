@@ -1,10 +1,13 @@
 package dominio.peaje;
 
+import java.util.ArrayList;
+
 public class Vehiculo {
     private String matricula;
     private String modelo;
     private String color;
     private CatVehiculo categoria;
+    private final ArrayList<Transito> transitos = new ArrayList();
 
     public Vehiculo(String matricula, String modelo, String color, CatVehiculo categoria) {
         this.matricula = matricula;
@@ -19,6 +22,10 @@ public class Vehiculo {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+    public ArrayList<Transito> getTransitos() {
+        return transitos;
     }
 
     public String getModelo() {
