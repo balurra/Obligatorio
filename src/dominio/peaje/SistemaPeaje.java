@@ -1,64 +1,58 @@
 package dominio.peaje;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SistemaPeaje {
     private ArrayList<Puesto> puestos = new ArrayList<>();
     private ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-    private ArrayList<CatVehiculo> categorias = new ArrayList<>();
-    private ArrayList<Bonificacion> bonificaciones = new ArrayList<>();
+    private ArrayList<TipoBonificacion> tiposBonif = new ArrayList<>();
+    private ArrayList<Recarga> recargas = new ArrayList<>();
     
-    public void agregarPuesto(Puesto puesto) {
-        if (validarListaPuestos(puesto) &&
-            validarListaCategoriaTarifas(puesto.getTarifas())) {
+    public Puesto agregarPuesto(Puesto puesto) {
+        if (validarListaPuestos(puesto)) {
             puestos.add(puesto);
         }
+        return puesto;
     }
 
-    private boolean validarListaPuestos(Puesto puesto) {
-        return puestos.contains(puesto);
-    }
-    
     public void agregarVehiculo(Vehiculo vehiculo) {
         if (validarListaVehiculos(vehiculo)) {
             vehiculos.add(vehiculo);
         }
     }
-
-    private boolean validarListaVehiculos(Vehiculo vehiculo) {
-        return vehiculos.contains(vehiculo);
-    }
-   
-    public CatVehiculo agregarCategoria(CatVehiculo categoria) {
-        if (validarListaCategorias(categoria)) {
-            categorias.add(categoria);
-        }
-        return categoria;
+    
+    public List<TipoBonificacion> getTiposBonif() {
+        return tiposBonif;
     }
 
-    private boolean validarListaCategorias(CatVehiculo categoria) {
-        return categorias.contains(categoria);
+    public ArrayList<Puesto> getPuestos() {
+        return puestos;
+    }
+
+    public ArrayList<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public ArrayList<Recarga> getRecargas() {
+        return recargas;
     }
     
-    public void agregarBonificacion(Bonificacion bonificacion) {
-        if (validarListaBonificaciones(bonificacion)) {
-            bonificaciones.add(bonificacion);
+    public void agregarTipoBonif (TipoBonificacion tipo) {
+        if (validarListaTiposBonif(tipo)) {
+            tiposBonif.add(tipo);
         }
     }
 
-    private boolean validarListaBonificaciones(Bonificacion bonificacion) {
-        return bonificaciones.contains(bonificacion);
+    private boolean validarListaTiposBonif(TipoBonificacion tipo) {
+        return !tiposBonif.contains(tipo);
     }
 
-    private boolean validarListaCategoriaTarifas(ArrayList<Tarifa> tarifas) {
-        if(tarifas == null || tarifas.isEmpty()){
-            return true;
-        }
-        for(Tarifa t:tarifas){
-            if(!validarListaCategorias(t.getCategoriaVehiculo())){
-                return false;
-            }
-        }
-        return true;
+    private boolean validarListaVehiculos(Vehiculo vehiculo) {
+        return !vehiculos.contains(vehiculo);
+    }
+    
+    private boolean validarListaPuestos(Puesto puesto) {
+        return !puestos.contains(puesto);
     }
 }

@@ -5,17 +5,11 @@ import java.util.ArrayList;
 public class Puesto {
     private String nombre;
     private String direccion;
-    private ArrayList<Tarifa> tarifas;
+    private final ArrayList<Tarifa> tarifas = new ArrayList();
 
     public Puesto(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
-    }
-
-    public Puesto(String nombre, String direccion, ArrayList<Tarifa> tarifas) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.tarifas = tarifas;
     }
 
     public String getNombre() {

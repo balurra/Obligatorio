@@ -1,11 +1,45 @@
 package dominio.usuario;
 
+import dominio.peaje.Bonificacion;
+import dominio.peaje.Notificacion;
+import dominio.peaje.Recarga;
+import dominio.peaje.Vehiculo;
+import java.util.ArrayList;
+
 public class Propietario extends Usuario{
     private int saldo;
+    private Vehiculo vehiculo;
+    private Bonificacion bonificacion;
+    private final ArrayList<Notificacion> notificaciones = new ArrayList();
+    private final ArrayList<Recarga> recargas = new ArrayList();
 
     public Propietario(String cedula, String password, String nombreCompleto, int saldo) {
         super(cedula, password, nombreCompleto);
         this.saldo = saldo;
+    }
+    
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+    
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public Bonificacion getBonificacion() {
+        return bonificacion;
+    }
+
+    public void setBonificacion(Bonificacion bonificacion) {
+        this.bonificacion = bonificacion;
+    }
+    
+    public ArrayList<Notificacion> getNotificaciones() {
+        return notificaciones;
+    }
+
+    public ArrayList<Recarga> getRecargas() {
+        return recargas;
     }
 
     public int getSaldo() {
@@ -14,5 +48,11 @@ public class Propietario extends Usuario{
 
     public void setSaldo(int saldo) {
         this.saldo = saldo;
-    }   
+    }
+    
+    @Override
+    public boolean validarUsuario() {
+        return super.validarUsuario() &&
+               saldo > -1;
+    }
 }

@@ -1,25 +1,26 @@
 package inicio;
 
 import dominio.usuario.Administrador;
-import dominio.peaje.Bonificacion;
 import dominio.peaje.CatVehiculo;
 import dominio.Fachada;
 import dominio.usuario.Propietario;
 import dominio.peaje.Puesto;
 import dominio.peaje.Tarifa;
+import dominio.peaje.Exonerado;
+import dominio.peaje.Frecuente;
+import dominio.peaje.Trabajador;
 import dominio.peaje.Vehiculo;
-import java.util.ArrayList;
 
 public class DatosPrueba {
     public static void cargar(){
         Fachada logica = Fachada.getInstancia();
         
-        //-------------------------------------------------USUARIOS ADMIN-------------------------------------------------
+        //-------------------------------USUARIOS ADMIN//-------------------------------
         logica.registrarAdmin(new Administrador("50882785","12345","Michelle Lazcano"));
         logica.registrarAdmin(new Administrador("49808351","12345","Nicolas Urraburu"));
         logica.registrarAdmin(new Administrador("27342119","12345","Juan Pérez"));
         
-        //-----------------------------------------------USUARIOS PROPIETARIOS-----------------------------------------------
+        //----------------------------USUARIOS PROPIETARIOS//----------------------------
         logica.registrarProp(new Propietario("25736424","12345","Micaela Aguilar",2000));
         logica.registrarProp(new Propietario("17394758","12345","Ana Ruiz",0));
         logica.registrarProp(new Propietario("18467373","12345","Pablo González",5000));
@@ -31,47 +32,66 @@ public class DatosPrueba {
         logica.registrarProp(new Propietario("48959877","12345","Óscar Cruz",0));
         logica.registrarProp(new Propietario("24384969","12345","Tobías González",230));
         
-        //------------------------CATEGORÍAS DE VEHÍCULOS------------------------
-        CatVehiculo c1 = logica.agregarCategoria(new CatVehiculo("Automóvil"));
-        CatVehiculo c2 = logica.agregarCategoria(new CatVehiculo("Motocicleta"));
-        CatVehiculo c3 = logica.agregarCategoria(new CatVehiculo("Bus"));
-        CatVehiculo c4 = logica.agregarCategoria(new CatVehiculo("Microbus"));
-        CatVehiculo c5 = logica.agregarCategoria(new CatVehiculo("Cuatriciclo"));
+        //----------CATEGORÍAS DE VEHÍCULOS//----------
+        CatVehiculo c1 = new CatVehiculo("Automóvil");
+        CatVehiculo c2 = new CatVehiculo("Motocicleta");
+        CatVehiculo c3 = new CatVehiculo("Bus");
+        CatVehiculo c4 = new CatVehiculo("Microbus");
+        CatVehiculo c5 = new CatVehiculo("Cuatriciclo");
         
-        //----------LISTAS DE TARIFAS PARA PUESTOS----------
-        Tarifa t11 = new Tarifa(200,c1);
-        Tarifa t12 = new Tarifa(100,c2);
-        Tarifa t13 = new Tarifa(320,c3);
-        Tarifa t14 = new Tarifa(239,c4);
-        Tarifa t15 = new Tarifa(67,c5);
+        //-----TARIFAS PARA PUESTOS-----
+        Tarifa t1 = new Tarifa(200,c1);
+        Tarifa t2 = new Tarifa(100,c2);
+        Tarifa t3 = new Tarifa(320,c3);
+        Tarifa t4 = new Tarifa(239,c4);
+        Tarifa t5 = new Tarifa(67,c5);
         
-        ArrayList<Tarifa> tarifas1= new ArrayList<>();
-        tarifas1.add(t11);tarifas1.add(t12);tarifas1.add(t13);tarifas1.add(t14);tarifas1.add(t15);
+        //-----------------------------------PUESTOS-----------------------------------
+        Puesto p1 = logica.agregarPuesto(new Puesto("Puesto Montevideo","Ruta9 km28"));
+        if (p1 != null) {
+            p1.getTarifas().add(t1);
+            p1.getTarifas().add(t2);
+            p1.getTarifas().add(t3);
+        }
+
+        Puesto p2 = logica.agregarPuesto(new Puesto("Puesto Maldonado","Ruta 6 km 102"));
+        if (p2 != null) {
+            p2.getTarifas().add(t2);
+            p2.getTarifas().add(t4);
+            p2.getTarifas().add(t5);
+        }
         
-        ArrayList<Tarifa> tarifas2= new ArrayList<>();
-        tarifas1.add(t11);tarifas1.add(t12);tarifas1.add(t13); 
+        Puesto p3 = logica.agregarPuesto(new Puesto("Puesto Colonia","Ruta 3 km 280"));
+        if (p3 != null) {
+            p3.getTarifas().add(t1);
+            p3.getTarifas().add(t2);
+            p3.getTarifas().add(t3);
+            p3.getTarifas().add(t4);
+            p3.getTarifas().add(t5);
+        }
+
+        Puesto p4 = logica.agregarPuesto(new Puesto("Puesto San José","Ruta 4 km 98"));
+        if (p4 != null) {
+            p4.getTarifas().add(t1);
+            p4.getTarifas().add(t2);
+            p4.getTarifas().add(t3);
+            p4.getTarifas().add(t5);
+        }
         
-        ArrayList<Tarifa> tarifas3= new ArrayList<>();
-        tarifas1.add(t11);tarifas1.add(t13);
+        Puesto p5 = logica.agregarPuesto(new Puesto("Puesto Canelones","Ruta 1 km 50"));
+        if (p5 != null) {
+            p5.getTarifas().add(t1);
+            p5.getTarifas().add(t2);
+            p5.getTarifas().add(t5);
+        }
         
-        ArrayList<Tarifa> tarifas4= new ArrayList<>();
-        tarifas1.add(t12);
+        Puesto p6 = logica.agregarPuesto(new Puesto("Puesto Lavalleja","Ruta 11 km 22"));
+        if (p6 != null) {
+            p6.getTarifas().add(t1);
+            p6.getTarifas().add(t2);
+        }
         
-        //--------------------------------------------PUESTOS--------------------------------------------
-        logica.agregarPuesto(new Puesto("Puesto Montevideo","Ruta9 km28",tarifas1));
-        logica.agregarPuesto(new Puesto("Puesto Maldonado","Ruta6 km102",tarifas1));
-        logica.agregarPuesto(new Puesto("Puesto Colonia","Ruta3 km280",tarifas2));
-        logica.agregarPuesto(new Puesto("Puesto San José","Ruta4 km98",tarifas4));
-        logica.agregarPuesto(new Puesto("Puesto Fray Bentos","Ruta5 km265"));
-        logica.agregarPuesto(new Puesto("Puesto Canelones","Ruta1 km 50",tarifas2));
-        logica.agregarPuesto(new Puesto("Puesto Rocha","Ruta12 km 324",tarifas3));
-        logica.agregarPuesto(new Puesto("Puesto Tacuarembó","Ruta7 km347",tarifas3));
-        logica.agregarPuesto(new Puesto("Puesto Treinta y Tres","Ruta8 km221"));
-        logica.agregarPuesto(new Puesto("Puesto Salto","Ruta9 km490",tarifas1));
-        logica.agregarPuesto(new Puesto("Puesto Artigas","Ruta10 km548",tarifas2));
-        logica.agregarPuesto(new Puesto("Puesto Rivera","Ruta11 km555",tarifas1));
-       
-        //---------------------------------------------VEHÍCULOS---------------------------------------------
+        //-------------------------------VEHÍCULOS//-------------------------------
         logica.agregarVehiculo(new Vehiculo("SBU 9357","Audi TT RS","Blanco",c1));
         logica.agregarVehiculo(new Vehiculo("JNK 2540","BMW X6","Negro",c1));
         logica.agregarVehiculo(new Vehiculo("SON 2309","Volkswagen Up","Rojo",c1));
@@ -86,16 +106,9 @@ public class DatosPrueba {
         logica.agregarVehiculo(new Vehiculo("MOT 9592","Renault Master","Blanco",c4));
         logica.agregarVehiculo(new Vehiculo("YRP 6675","Yamaha Raptor 700","Rojo",c5));
 
-        //--------------------------BONIFICACIONES--------------------------
-        logica.agregarBonificacion(new Bonificacion("Manejo seguro"));
-        logica.agregarBonificacion(new Bonificacion("Buen estado de luces"));
-        logica.agregarBonificacion(new Bonificacion("Buen estado de ruedas"));
-        logica.agregarBonificacion(new Bonificacion("Frenos ABS"));
-        logica.agregarBonificacion(new Bonificacion("Airbag"));
-        logica.agregarBonificacion(new Bonificacion("Cinturon"));
-        logica.agregarBonificacion(new Bonificacion("Carrocería limpia"));
-        logica.agregarBonificacion(new Bonificacion("Aire acondicionado"));
-        logica.agregarBonificacion(new Bonificacion("Asientos de cuero"));
-        logica.agregarBonificacion(new Bonificacion("Radio"));
+        //-------------BONIFICACIONES-------------
+        logica.agregarTipoBonif(new Exonerado());
+        logica.agregarTipoBonif(new Frecuente());
+        logica.agregarTipoBonif(new Trabajador());
     }
 }

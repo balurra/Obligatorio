@@ -1,5 +1,8 @@
 package dominio.peaje;
 
-public class Frecuente {
-    
+public class Frecuente extends TipoBonificacion {
+
+    public Frecuente() {
+        super("Frecuente");
+    }
 }

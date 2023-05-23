@@ -1,5 +1,8 @@
 package dominio.peaje;
 
-public class Trabajador {
-    
+public class Trabajador extends TipoBonificacion {
+
+    public Trabajador() {
+        super("Trabajador");
+    } 
 }
