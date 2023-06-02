@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class Propietario extends Usuario{
     private int saldo;
-    private Vehiculo vehiculo;
     private Bonificacion bonificacion;
     private final ArrayList<Notificacion> notificaciones = new ArrayList();
+    private final ArrayList<Vehiculo> vehiculos = new ArrayList();
     private final ArrayList<Recarga> recargas = new ArrayList();
 
     public Propietario(String cedula, String password, String nombreCompleto, int saldo) {
@@ -18,12 +18,8 @@ public class Propietario extends Usuario{
         this.saldo = saldo;
     }
     
-    public Vehiculo getVehiculo() {
-        return vehiculo;
-    }
-    
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public ArrayList<Vehiculo> getVehiculos() {
+        return vehiculos;
     }
 
     public Bonificacion getBonificacion() {

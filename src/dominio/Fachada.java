@@ -8,6 +8,7 @@ import dominio.peaje.Vehiculo;
 import dominio.usuario.Administrador;
 import dominio.usuario.Propietario;
 import dominio.usuario.Sesion;
+import dominio.usuario.UsuarioException;
 import java.util.List;
 
 public class Fachada {
@@ -19,7 +20,7 @@ public class Fachada {
         return instancia;
     }
     
-    public Sesion loginAdmin(String cedula, String password) {
+    public Sesion loginAdmin(String cedula, String password) throws UsuarioException {
         return sistemaUsuario.loginAdmin(cedula, password);
     }
     

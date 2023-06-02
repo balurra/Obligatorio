@@ -4,21 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SistemaUsuario {
-    private List<Propietario> propietarios = new ArrayList<>();
-    private List<Administrador> administradores = new ArrayList<>();
-    private List<Sesion> logueados = new ArrayList<>();
+    private final List<Propietario> propietarios = new ArrayList<>();
+    private final List<Administrador> administradores = new ArrayList<>();
+    private final List<Sesion> logueados = new ArrayList<>();
     
     public List<Sesion> getLogueados() {
         return logueados;
     }
 
     public Sesion loginProp(String cedula, String password) {
-        Sesion sesion = login(cedula, password, propietarios);
+        Propietario propietario = null;
+        Sesion sesion = null;
+        
+        for (Propietario prop : propietarios) {
+            if (cedula.equals(prop.getCedula())) {
+                propietario = prop;
+            }
+        }
+        if (propietario != null) {
+            sesion = login(cedula, password, propietario);
+        }
         return sesion;
     }
     
-    public Sesion loginAdmin(String cedula, String password) {
-        Sesion sesion = login(cedula, password, administradores);
+    public Sesion loginAdmin(String cedula, String password) throws UsuarioException {
+        Administrador administrador = null;
+        Sesion sesion = null;
+        
+        for (Administrador admin : administradores) {
+            if (cedula.equals(admin.getCedula())) {
+                administrador = admin;
+            }
+        }
+        if (administrador != null) {
+            if (validarListaLogueados(administrador)) {
+                sesion = login(cedula, password, administrador);
+            } else {
+                throw new UsuarioException("El administrador ya está logueado");
+            }
+        }
+        
         return sesion;
     }
     
@@ -34,17 +59,12 @@ public class SistemaUsuario {
         }
     }
     
-    private Sesion login(String cedula, String password, List usuarios) {
-        Usuario usuario;
-        for (Object usuarioObj : usuarios) {
-            usuario = (Usuario) usuarioObj;
-            if (validarLogin(usuario, cedula, password)) {
-                Sesion sesion = new Sesion(usuario);
-                if (validarListaLogueados(sesion)) {
-                    logueados.add(sesion);
-                    return sesion;
-                }
-            }
+    private Sesion login(String cedula, String password, Usuario usuario) {
+        if (usuario != null &&
+            validarLogin(usuario, cedula, password)) {
+            Sesion sesion = new Sesion(usuario);
+            logueados.add(sesion);
+            return sesion;
         }
         return null;
     }
@@ -62,12 +82,30 @@ public class SistemaUsuario {
         return !administradores.contains(admin) && admin.validarUsuario();
     }
     
-    private boolean validarListaLogueados(Sesion sesion) {
+    private boolean validarListaLogueados(Usuario usuario) {
         for(Sesion s : logueados) {
-            if(s.getUsuario().equals(sesion.getUsuario())) {
+            if(s.getUsuario().equals(usuario)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private Usuario buscarUsuario(String cedula) {
+        Usuario retorno = null;
+        for (Administrador admin : administradores) {
+            if (cedula.equals(admin.getCedula())) {
+                retorno = admin;
+            }
+        }
+        if (retorno == null) {
+            for (Propietario prop : propietarios) {
+                if (cedula.equals(prop.getCedula())) {
+                    retorno = prop;
+                }
+            }
+        }
+        
+        return retorno;
     }
 }

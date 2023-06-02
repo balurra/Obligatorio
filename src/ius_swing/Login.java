@@ -1,14 +1,20 @@
 package ius_swing;
 
-import dominio.usuario.Sesion;
-import dominio.usuario.Usuario;
+import controladores.ControladorLogin;
 import javax.swing.JOptionPane;
+import vistas.VistaLogin;
 
-public abstract class Login extends javax.swing.JDialog {
+public abstract class Login extends javax.swing.JDialog implements VistaLogin {
+    private ControladorLogin controlador = new ControladorLogin(this);
+    
     public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
+    }
+    
+    public ControladorLogin getControlador() {
+        return controlador;
     }
 
     @SuppressWarnings("unchecked")
@@ -86,11 +92,13 @@ public abstract class Login extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_cedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cedulaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txt_cedulaActionPerformed
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        login();
+        String cedula = txt_cedula.getText();
+        String password = String.valueOf(pwd_password.getPassword());
+        
+        this.login(cedula, password);
     }//GEN-LAST:event_btn_loginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -100,45 +108,13 @@ public abstract class Login extends javax.swing.JDialog {
     private javax.swing.JPasswordField pwd_password;
     private javax.swing.JTextField txt_cedula;
     // End of variables declaration//GEN-END:variables
-
-    private void login() {
-        boolean verificarTextosLogin = true;
-        
-        String cedula = txt_cedula.getText();
-        if (cedula.isEmpty()) {
-            JOptionPane.showMessageDialog(
-                    this, 
-                    "Ingresar cédula", 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
-            verificarTextosLogin = false;
-        }
-        
-        String password = String.valueOf(pwd_password.getPassword());
-        if (password.isEmpty()) {
-            JOptionPane.showMessageDialog(
-                    this, 
-                    "Ingresar contraseña", 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
-            verificarTextosLogin = false;
-        }
-        
-        if (verificarTextosLogin) {
-            Sesion sesion = this.login(cedula, password);
-            if (sesion != null) {
-                this.mostrarProximaInterfaz(sesion.getUsuario());
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(
+    
+    @Override
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(
                     this,
-                    "Los datos son incorrectos o el usuario ya está logueado", //TODO: separar errores
+                    mensaje,
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
-            }
-        }
     }
-    
-    public abstract Sesion login(String cedula, String password);
-    public abstract void mostrarProximaInterfaz(Usuario usuario);
 }
