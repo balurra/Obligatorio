@@ -47,10 +47,13 @@ public class SistemaUsuario {
         return sesion;
     }
     
-    public void registrarProp(Propietario prop) {
+    public Propietario registrarProp(Propietario prop) {
+        Propietario retorno = null;
         if (validarListaPropietarios(prop)) {
             propietarios.add(prop);
+            retorno = prop;
         }
+        return retorno;
     }
     
     public void registrarAdmin(Administrador admin) {

@@ -5,10 +5,13 @@ import dominio.peaje.Notificacion;
 import dominio.peaje.Recarga;
 import dominio.peaje.Vehiculo;
 import java.util.ArrayList;
+import java.util.List;
+import observer.Observable;
+import observer.Observador;
 
-public class Propietario extends Usuario{
+public class Propietario extends Usuario implements Observable {
     private int saldo;
-    private Bonificacion bonificacion;
+    private final ArrayList<Bonificacion> bonificaciones = new ArrayList();
     private final ArrayList<Notificacion> notificaciones = new ArrayList();
     private final ArrayList<Vehiculo> vehiculos = new ArrayList();
     private final ArrayList<Recarga> recargas = new ArrayList();
@@ -22,12 +25,8 @@ public class Propietario extends Usuario{
         return vehiculos;
     }
 
-    public Bonificacion getBonificacion() {
-        return bonificacion;
-    }
-
-    public void setBonificacion(Bonificacion bonificacion) {
-        this.bonificacion = bonificacion;
+    public ArrayList<Bonificacion> getBonificaciones() {
+        return bonificaciones;
     }
     
     public ArrayList<Notificacion> getNotificaciones() {
@@ -50,5 +49,27 @@ public class Propietario extends Usuario{
     public boolean validarUsuario() {
         return super.validarUsuario() &&
                saldo > -1;
+    }
+
+    @Override
+    public void agregar(Observador observador) {
+        if (!observadores.contains(observador)) {
+            observadores.add(observador);
+        }
+    }
+
+    @Override
+    public void quitar(Observador observador) {
+        if (observadores.contains(observador)) {
+            observadores.remove(observador);
+        }
+    }
+
+    @Override
+    public void avisar(Object evento) {
+        List<Observador> observadoresTemporal = new ArrayList<>(observadores);
+        for (Observador observador : observadoresTemporal) {
+            observador.actualizar(this, evento);
+        }
     }
 }

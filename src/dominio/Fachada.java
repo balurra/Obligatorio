@@ -9,9 +9,12 @@ import dominio.usuario.Administrador;
 import dominio.usuario.Propietario;
 import dominio.usuario.Sesion;
 import dominio.usuario.UsuarioException;
+import java.util.ArrayList;
 import java.util.List;
+import observer.Observable;
+import observer.Observador;
 
-public class Fachada {
+public class Fachada implements Observable {
     private static Fachada instancia = new Fachada();
     private SistemaPeaje sistemaPeaje = new SistemaPeaje();
     private SistemaUsuario sistemaUsuario = new SistemaUsuario();
@@ -28,8 +31,8 @@ public class Fachada {
         return sistemaUsuario.loginProp(cedula, password);
     }
 
-    public void registrarProp(Propietario prop) {
-        sistemaUsuario.registrarProp(prop);
+    public Propietario registrarProp(Propietario prop) {
+        return sistemaUsuario.registrarProp(prop);
     }
     
     public void registrarAdmin(Administrador admin) {
@@ -44,11 +47,33 @@ public class Fachada {
         return sistemaPeaje.agregarPuesto(puesto);
     }
 
-    public void agregarVehiculo(Vehiculo vehiculo) {
-        sistemaPeaje.agregarVehiculo(vehiculo);
+    public Vehiculo agregarVehiculo(Vehiculo vehiculo) {
+        return sistemaPeaje.agregarVehiculo(vehiculo);
     }
 
     public void agregarTipoBonif(TipoBonificacion tipo) {
         sistemaPeaje.agregarTipoBonif(tipo);
+    }
+
+    @Override
+    public void agregar(Observador observador) {
+        if (!observadores.contains(observador)) {
+            observadores.add(observador);
+        }
+    }
+
+    @Override
+    public void quitar(Observador observador) {
+        if (observadores.contains(observador)) {
+            observadores.remove(observador);
+        }
+    }
+
+    @Override
+    public void avisar(Object evento) {
+        List<Observador> observadoresTemporal = new ArrayList<>(observadores);
+        for (Observador observador : observadoresTemporal) {
+            observador.actualizar(this, evento);
+        }
     }
 }

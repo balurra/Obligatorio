@@ -10,16 +10,21 @@ public class SistemaPeaje {
     private ArrayList<Recarga> recargas = new ArrayList<>();
     
     public Puesto agregarPuesto(Puesto puesto) {
+        Puesto retorno = null;
         if (validarListaPuestos(puesto)) {
             puestos.add(puesto);
+            retorno = puesto;
         }
-        return puesto;
+        return retorno;
     }
 
-    public void agregarVehiculo(Vehiculo vehiculo) {
+    public Vehiculo agregarVehiculo(Vehiculo vehiculo) {
+        Vehiculo retorno = null;
         if (validarListaVehiculos(vehiculo)) {
             vehiculos.add(vehiculo);
+            retorno = vehiculo;
         }
+        return retorno;
     }
     
     public List<TipoBonificacion> getTiposBonif() {

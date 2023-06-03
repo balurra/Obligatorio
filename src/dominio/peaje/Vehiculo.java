@@ -1,8 +1,11 @@
 package dominio.peaje;
 
 import java.util.ArrayList;
+import java.util.List;
+import observer.Observable;
+import observer.Observador;
 
-public class Vehiculo {
+public class Vehiculo implements Observable {
     private String matricula;
     private String modelo;
     private String color;
@@ -50,5 +53,27 @@ public class Vehiculo {
 
     public void setCategoria(CatVehiculo categoria) {
         this.categoria = categoria;
+    }
+
+    @Override
+    public void agregar(Observador observador) {
+        if (!observadores.contains(observador)) {
+            observadores.add(observador);
+        }
+    }
+
+    @Override
+    public void quitar(Observador observador) {
+        if (observadores.contains(observador)) {
+            observadores.remove(observador);
+        }
+    }
+
+    @Override
+    public void avisar(Object evento) {
+        List<Observador> observadoresTemporal = new ArrayList<>(observadores);
+        for (Observador observador : observadoresTemporal) {
+            observador.actualizar(this, evento);
+        }
     }
 }
