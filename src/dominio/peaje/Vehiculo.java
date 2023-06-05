@@ -1,5 +1,6 @@
 package dominio.peaje;
 
+import dominio.usuario.Propietario;
 import java.util.ArrayList;
 import java.util.List;
 import observer.Observable;
@@ -11,21 +12,33 @@ public class Vehiculo implements Observable {
     private String color;
     private CatVehiculo categoria;
     private final ArrayList<Transito> transitos = new ArrayList();
+    private Propietario prop;
 
-    public Vehiculo(String matricula, String modelo, String color, CatVehiculo categoria) {
+    public Vehiculo(String matricula, String modelo, String color, CatVehiculo categoria, Propietario prop) {
         this.matricula = matricula;
         this.modelo = modelo;
         this.color = color;
         this.categoria = categoria;
+        this.prop = prop;
     }
 
     public String getMatricula() {
         return matricula;
     }
-
+    
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
+
+    public Propietario getProp() {
+        return prop;
+    }
+
+    public void setProp(Propietario prop) {
+        this.prop = prop;
+    }
+    
+    
 
     public ArrayList<Transito> getTransitos() {
         return transitos;

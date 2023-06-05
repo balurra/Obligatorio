@@ -2,6 +2,7 @@ package dominio.usuario;
 
 import dominio.peaje.Bonificacion;
 import dominio.peaje.Notificacion;
+import dominio.peaje.Puesto;
 import dominio.peaje.Recarga;
 import dominio.peaje.Vehiculo;
 import java.util.ArrayList;
@@ -44,6 +45,18 @@ public class Propietario extends Usuario implements Observable {
     public void setSaldo(int saldo) {
         this.saldo = saldo;
     }
+    
+    public Bonificacion bonifParaPuesto(Puesto puesto) {
+        Bonificacion bonif = null;
+        
+        for (Bonificacion b : bonificaciones) {
+            if (puesto.equals(b.getPuesto())) {
+                bonif = b;
+            }
+        }
+        
+        return bonif;
+    } 
     
     @Override
     public boolean validarUsuario() {

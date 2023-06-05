@@ -52,11 +52,15 @@ public class DatosPrueba {
             p1.getTarifas().add(t1);
             p1.getTarifas().add(t2);
             p1.getTarifas().add(t3);
+            p1.getTarifas().add(t4);
+            p1.getTarifas().add(t5);
         }
 
         Puesto p2 = logica.agregarPuesto(new Puesto("Puesto Maldonado","Ruta 6 km 102"));
         if (p2 != null) {
+            p2.getTarifas().add(t1);
             p2.getTarifas().add(t2);
+            p2.getTarifas().add(t3);
             p2.getTarifas().add(t4);
             p2.getTarifas().add(t5);
         }
@@ -75,6 +79,7 @@ public class DatosPrueba {
             p4.getTarifas().add(t1);
             p4.getTarifas().add(t2);
             p4.getTarifas().add(t3);
+            p4.getTarifas().add(t4);
             p4.getTarifas().add(t5);
         }
         
@@ -82,6 +87,8 @@ public class DatosPrueba {
         if (p5 != null) {
             p5.getTarifas().add(t1);
             p5.getTarifas().add(t2);
+            p5.getTarifas().add(t3);
+            p5.getTarifas().add(t4);
             p5.getTarifas().add(t5);
         }
         
@@ -89,22 +96,22 @@ public class DatosPrueba {
         if (p6 != null) {
             p6.getTarifas().add(t1);
             p6.getTarifas().add(t2);
+            p6.getTarifas().add(t3);
+            p6.getTarifas().add(t4);
+            p6.getTarifas().add(t5);
         }
         
-        //----------------------------------------------------VEHÍCULOS----------------------------------------------------
-        Vehiculo v1 = logica.agregarVehiculo(new Vehiculo("SBU 9357","Audi TT RS","Blanco",c1));
-        Vehiculo v2 = logica.agregarVehiculo(new Vehiculo("JNK 2540","BMW X6","Negro",c1));
-        Vehiculo v3 = logica.agregarVehiculo(new Vehiculo("SON 2309","Volkswagen Up","Rojo",c1));
-        Vehiculo v4 = logica.agregarVehiculo(new Vehiculo("KJH 8778","Honda Civic","Amarillo",c1));
-        Vehiculo v5 = logica.agregarVehiculo(new Vehiculo("GVD 3432","Chevrolet Spin","Verde",c1));
-        Vehiculo v6 = logica.agregarVehiculo(new Vehiculo("QRW 2455","Yamaha Crypton","Blanco",c2));
-        Vehiculo v7 = logica.agregarVehiculo(new Vehiculo("MYT 5823","Kiden KD 150 Z","Rojo",c2));
-        Vehiculo v8 = logica.agregarVehiculo(new Vehiculo("DFJ 2129","Zanella ZT 150","Negro",c2));
-        Vehiculo v9 = logica.agregarVehiculo(new Vehiculo("VFR 8868","Marcopolo Viaggio 1050","Negro",c3));
-        Vehiculo v10 =  logica.agregarVehiculo(new Vehiculo("KIO 3465","Marcopolo Audace","Rojo",c3));
-        Vehiculo v11 = logica.agregarVehiculo(new Vehiculo("ERP 2458","Mercedes-Benz Sprinter","Amarillo",c4));
-        Vehiculo v12 = logica.agregarVehiculo(new Vehiculo("MOT 9592","Renault Master","Blanco",c4));
-        Vehiculo v13 = logica.agregarVehiculo(new Vehiculo("YRP 6675","Yamaha Raptor 700","Rojo",c5));
+        //---------------------------------------------------------VEHÍCULOS//---------------------------------------------------------
+        Vehiculo v1 = logica.agregarVehiculo(new Vehiculo("SBU 9357","Audi TT RS","Blanco",c1,prop1));
+        Vehiculo v2 = logica.agregarVehiculo(new Vehiculo("JNK 2540","BMW X6","Negro",c1,prop2));
+        Vehiculo v3 = logica.agregarVehiculo(new Vehiculo("SON 2309","Volkswagen Up","Rojo",c1,prop3));
+        Vehiculo v4 = logica.agregarVehiculo(new Vehiculo("KJH 8778","Honda Civic","Amarillo",c1,prop4));
+        Vehiculo v5 = logica.agregarVehiculo(new Vehiculo("GVD 3432","Chevrolet Spin","Verde",c1,prop5));
+        Vehiculo v6 = logica.agregarVehiculo(new Vehiculo("QRW 2455","Yamaha Crypton","Blanco",c2,prop6));
+        Vehiculo v7 = logica.agregarVehiculo(new Vehiculo("MYT 5823","Kiden KD 150 Z","Rojo",c2,prop7));
+        Vehiculo v8 = logica.agregarVehiculo(new Vehiculo("DFJ 2129","Zanella ZT 150","Negro",c2,prop8));
+        Vehiculo v9 = logica.agregarVehiculo(new Vehiculo("VFR 8868","Marcopolo Viaggio 1050","Negro",c3,prop9));
+        Vehiculo v10 = logica.agregarVehiculo(new Vehiculo("KIO 3465","Marcopolo Audace","Rojo",c3,prop10));
         
         //--asignar vehículos a propietarios--
         prop1.getVehiculos().add(v1);
@@ -116,7 +123,7 @@ public class DatosPrueba {
         prop7.getVehiculos().add(v7);
         prop8.getVehiculos().add(v8);
         prop9.getVehiculos().add(v9);
-        prop10.getVehiculos().add(v13);
+        prop10.getVehiculos().add(v10);
 
         //-------------BONIFICACIONES-------------
         logica.agregarTipoBonif(new Exonerado());

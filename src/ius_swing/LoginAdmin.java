@@ -18,7 +18,7 @@ public class LoginAdmin extends Login{
     @Override
     public void mostrarProximaInterfaz(Usuario usuario) {
         dispose();
-        TableroAdmin tableroAdmin = new TableroAdmin(null, false, (Administrador)usuario);
+        TableroAdmin tableroAdmin = new TableroAdmin((Administrador)usuario);
         tableroAdmin.setVisible(true);
     }
 }

@@ -3,6 +3,8 @@ package dominio.peaje;
 import java.util.ArrayList;
 
 public class Puesto {
+    private int nroPuesto;
+    private static int ultId = 0;
     private String nombre;
     private String direccion;
     private final ArrayList<Tarifa> tarifas = new ArrayList();
@@ -10,6 +12,8 @@ public class Puesto {
     public Puesto(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
+        ultId++;
+        nroPuesto = ultId;
     }
 
     public String getNombre() {
@@ -18,6 +22,10 @@ public class Puesto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public int getNroPuesto() {
+        return nroPuesto;
     }
 
     public String getDireccion() {

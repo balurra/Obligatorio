@@ -8,8 +8,7 @@ public abstract class TipoBonificacion {
         this.nombre = nombre;
     }
 
-    @Override
-    public String toString() {
+    public String getNombre() {
         return nombre;
     }
 }

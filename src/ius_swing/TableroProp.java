@@ -2,13 +2,9 @@ package ius_swing;
 
 import dominio.usuario.Propietario;
 
-public class TableroProp extends javax.swing.JDialog {
-    private Propietario prop;
-    
-    public TableroProp(java.awt.Frame parent, boolean modal, Propietario prop) {
-        super(parent, modal);
+public class TableroProp extends javax.swing.JFrame {
+    public TableroProp(Propietario prop) {
         initComponents();
-        this.prop = prop;
     }
 
     @SuppressWarnings("unchecked")
@@ -17,25 +13,25 @@ public class TableroProp extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("soy un tablero prop");
+        jLabel1.setText("prop");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
+                .addGap(174, 174, 174)
                 .addComponent(jLabel1)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
+                .addGap(85, 85, 85)
                 .addComponent(jLabel1)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
 
         pack();

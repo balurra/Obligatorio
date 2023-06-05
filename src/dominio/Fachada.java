@@ -1,8 +1,11 @@
 package dominio;
 
+import dominio.peaje.PeajeException;
 import dominio.peaje.Puesto;
+import dominio.peaje.Recarga;
 import dominio.peaje.SistemaPeaje;
 import dominio.peaje.TipoBonificacion;
+import dominio.peaje.Transito;
 import dominio.usuario.SistemaUsuario;
 import dominio.peaje.Vehiculo;
 import dominio.usuario.Administrador;
@@ -42,6 +45,22 @@ public class Fachada implements Observable {
     public List<Sesion> getLogueados() {
         return sistemaUsuario.getLogueados();
     }
+    
+    public List<Puesto> getPuestos() {
+        return sistemaPeaje.getPuestos();
+    }
+    
+    public List<Vehiculo> getVehiculos() {
+        return sistemaPeaje.getVehiculos();
+    }
+    
+    public List<TipoBonificacion> getTiposBonif() {
+        return sistemaPeaje.getTiposBonif();
+    }
+    
+    public List<Recarga> getRecargas() {
+        return sistemaPeaje.getRecargas();
+    }
 
     public Puesto agregarPuesto(Puesto puesto) {
         return sistemaPeaje.agregarPuesto(puesto);
@@ -54,7 +73,19 @@ public class Fachada implements Observable {
     public void agregarTipoBonif(TipoBonificacion tipo) {
         sistemaPeaje.agregarTipoBonif(tipo);
     }
+    
+    public Puesto buscarPuestoPorPos(int pos) {
+        return sistemaPeaje.buscarPuestoPorPos(pos);
+    }
 
+    public Vehiculo buscarVehiculo(String matricula) {
+        return sistemaPeaje.buscarVehiculo(matricula);
+    }
+    
+    public Transito emularTransito(Puesto puesto, Vehiculo vehiculo) throws PeajeException {
+        return sistemaPeaje.emularTransito(puesto, vehiculo);
+    }
+    
     @Override
     public void agregar(Observador observador) {
         if (!observadores.contains(observador)) {

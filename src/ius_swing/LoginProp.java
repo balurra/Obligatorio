@@ -18,7 +18,7 @@ public class LoginProp extends Login {
     @Override
     public void mostrarProximaInterfaz(Usuario usuario) {
         dispose();
-        TableroProp tableroProp = new TableroProp(null, false, (Propietario)usuario);
+        TableroProp tableroProp = new TableroProp((Propietario)usuario);
         tableroProp.setVisible(true);
     }
 }
