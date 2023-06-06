@@ -62,6 +62,30 @@ public class SistemaUsuario {
         }
     }
     
+     public Propietario buscarProp(String cedula) {
+        Propietario retorno = null;
+        
+        for (Propietario prop : propietarios) {
+            if (cedula.equals(prop.getCedula())) {
+                retorno = prop;
+            }
+        }
+
+        return retorno;
+    }
+     
+    public void cerrarSesion(Administrador admin) {
+        Sesion sesion = null;
+        for (Sesion s : logueados) {
+            if (admin.equals(s.getUsuario())) {
+                sesion = s;
+            }
+        }
+        if (sesion != null) {
+            logueados.remove(sesion);
+        }
+    }
+    
     private Sesion login(String cedula, String password, Usuario usuario) {
         if (usuario != null &&
             validarLogin(usuario, cedula, password)) {
@@ -92,23 +116,5 @@ public class SistemaUsuario {
             }
         }
         return true;
-    }
-
-    private Usuario buscarUsuario(String cedula) {
-        Usuario retorno = null;
-        for (Administrador admin : administradores) {
-            if (cedula.equals(admin.getCedula())) {
-                retorno = admin;
-            }
-        }
-        if (retorno == null) {
-            for (Propietario prop : propietarios) {
-                if (cedula.equals(prop.getCedula())) {
-                    retorno = prop;
-                }
-            }
-        }
-        
-        return retorno;
     }
 }

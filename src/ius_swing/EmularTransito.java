@@ -163,9 +163,9 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        Puesto puesto = buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
-        Vehiculo vehiculo = buscarVehiculo(txt_matricula.getText());
-        emularTransito(puesto, vehiculo);
+        Puesto puesto = controlador.buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
+        Vehiculo vehiculo = controlador.buscarVehiculo(txt_matricula.getText());
+        controlador.emularTransito(puesto, vehiculo);
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void txt_matriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_matriculaActionPerformed
@@ -174,7 +174,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
     private void cmb_puestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_puestoActionPerformed
         if (seInicializo) {
             model.setRowCount(0);
-            Puesto puesto = buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
+            Puesto puesto = controlador.buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
             for (Tarifa t : puesto.getTarifas()) {
                 model.addRow(new Object [] {
                     t.getCategoriaVehiculo().getNombre(),
@@ -198,19 +198,6 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
     private javax.swing.JTextField txt_matricula;
     // End of variables declaration//GEN-END:variables
 
-    private Puesto buscarPuestoPorPos(int pos) {
-        return controlador.buscarPuestoPorPos(pos);
-    }
-    
-    private Vehiculo buscarVehiculo(String matricula) {
-        return controlador.buscarVehiculo(matricula);
-    }
-    
-    
-    private void emularTransito(Puesto puesto, Vehiculo vehiculo) {
-        controlador.emularTransito(puesto, vehiculo);
-    }
-    
     @Override
     public void cargarPuestos(List<Puesto> puestos) {
         for (Puesto p : puestos) {

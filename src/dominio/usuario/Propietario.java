@@ -6,11 +6,8 @@ import dominio.peaje.Puesto;
 import dominio.peaje.Recarga;
 import dominio.peaje.Vehiculo;
 import java.util.ArrayList;
-import java.util.List;
-import observer.Observable;
-import observer.Observador;
 
-public class Propietario extends Usuario implements Observable {
+public class Propietario extends Usuario {
     private int saldo;
     private final ArrayList<Bonificacion> bonificaciones = new ArrayList();
     private final ArrayList<Notificacion> notificaciones = new ArrayList();
@@ -62,27 +59,5 @@ public class Propietario extends Usuario implements Observable {
     public boolean validarUsuario() {
         return super.validarUsuario() &&
                saldo > -1;
-    }
-
-    @Override
-    public void agregar(Observador observador) {
-        if (!observadores.contains(observador)) {
-            observadores.add(observador);
-        }
-    }
-
-    @Override
-    public void quitar(Observador observador) {
-        if (observadores.contains(observador)) {
-            observadores.remove(observador);
-        }
-    }
-
-    @Override
-    public void avisar(Object evento) {
-        List<Observador> observadoresTemporal = new ArrayList<>(observadores);
-        for (Observador observador : observadoresTemporal) {
-            observador.actualizar(this, evento);
-        }
     }
 }

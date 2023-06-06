@@ -1,6 +1,8 @@
 package dominio.usuario;
 
-public abstract class Usuario {
+import observer.Observable;
+
+public abstract class Usuario extends Observable {
     private String cedula;
     private String password;
     private String nombreCompleto;

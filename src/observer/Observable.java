@@ -3,10 +3,25 @@ package observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Observable {
-    final List<Observador> observadores = new ArrayList<>();
-    
-    public void agregar(Observador observador);
-    public void quitar(Observador observador);
-    public void avisar(Object evento);
+public abstract class Observable {
+    private final List<Observador> observadores = new ArrayList<>();
+
+    public void agregar(Observador observador) {
+         if (!observadores.contains(observador)) {
+             observadores.add(observador);
+         }
+     }
+
+    public void quitar(Observador observador) {
+        if (observadores.contains(observador)) {
+            observadores.remove(observador);
+        }
+     }
+
+    public void avisar(Object evento) {
+        List<Observador> observadoresTemporal = new ArrayList<>(observadores);
+        for (Observador observadorTemporal : observadoresTemporal) {
+            observadorTemporal.actualizar(this, evento);
+        }
+    }
 }

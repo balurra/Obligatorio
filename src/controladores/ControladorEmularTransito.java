@@ -23,7 +23,7 @@ public class ControladorEmularTransito  {
     public Vehiculo buscarVehiculo(String matricula) {
         Vehiculo vehiculo = fachada.buscarVehiculo(matricula);
         if (vehiculo == null) {
-            vista.mostrarError("“No existe el vehículo");
+            vista.mostrarError("No existe el vehículo");
         }
         return vehiculo;
     }

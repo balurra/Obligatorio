@@ -74,13 +74,15 @@ public class SistemaPeaje {
         int costo = tarifa.getMonto();
         Transito transito = null;
         Bonificacion bonif = prop.bonifParaPuesto(puesto);
+        int montoBonif = 0;
         
         if (bonif != null) {
-            costo = costo - calcularDesc(costo, bonif, vehiculo, fechaTransito);
+            montoBonif = calcularDesc(costo, bonif, vehiculo, fechaTransito);
+            costo = costo - montoBonif;
         }
         
         if (prop.getSaldo() >= costo) {
-            transito = agregarTransito(puesto, vehiculo, costo, fechaTransito, bonif);
+            transito = agregarTransito(puesto, vehiculo, costo, fechaTransito, bonif, montoBonif);
             enviarNotifs(fechaTransito, puesto, vehiculo);
         } else {
             throw new PeajeException("Saldo insuficiente");
@@ -89,12 +91,25 @@ public class SistemaPeaje {
         return transito;
     }
     
+    public TipoBonificacion buscarTipoBonifPorPos(int pos) {
+        return tiposBonif.get(pos);
+    }
+    
+    public void asignarBonificacion(Propietario prop, TipoBonificacion tipoBonif, Puesto puesto) throws PeajeException {
+        if (!tieneBonifEnPuesto(prop, puesto)) {
+            Bonificacion bonif = new Bonificacion(tipoBonif, puesto);
+            prop.getBonificaciones().add(bonif);
+        } else {
+            throw new PeajeException("El propietario ya tiene una bonificación en ese puesto");
+        }  
+    }
+    
     private int calcularDesc(int costo, Bonificacion bon, Vehiculo v, Date fecha) {
         return costo * (bon.calcularPorcentajeDesc(v, fecha)/100);
     }
     
-    private Transito agregarTransito(Puesto p, Vehiculo v, int costo, Date fecha, Bonificacion bon){
-        Transito transito = new Transito(p, v, costo, fecha, bon);
+    private Transito agregarTransito(Puesto p, Vehiculo v, int costo, Date fecha, Bonificacion bon, int montoBonif){
+        Transito transito = new Transito(p, v, costo, fecha, bon, montoBonif);
         Propietario prop = v.getProp();
         v.getTransitos().add(transito);
         int saldoProp = prop.getSaldo();
@@ -137,5 +152,16 @@ public class SistemaPeaje {
     
     private boolean validarListaPuestos(Puesto puesto) {
         return !puestos.contains(puesto);
+    }
+
+    private boolean tieneBonifEnPuesto(Propietario prop, Puesto puesto) {
+        boolean exito = false;
+        ArrayList<Bonificacion> bonifsProp = prop.getBonificaciones();
+        for (Bonificacion b : bonifsProp) {
+            if (puesto.equals(b.getPuesto())) {
+                exito = true;
+            }
+        }
+        return exito;
     }
 }

@@ -5,6 +5,7 @@ import dominio.usuario.Propietario;
 public class TableroProp extends javax.swing.JFrame {
     public TableroProp(Propietario prop) {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     @SuppressWarnings("unchecked")

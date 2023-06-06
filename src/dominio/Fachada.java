@@ -12,12 +12,10 @@ import dominio.usuario.Administrador;
 import dominio.usuario.Propietario;
 import dominio.usuario.Sesion;
 import dominio.usuario.UsuarioException;
-import java.util.ArrayList;
 import java.util.List;
 import observer.Observable;
-import observer.Observador;
 
-public class Fachada implements Observable {
+public class Fachada extends Observable {
     private static Fachada instancia = new Fachada();
     private SistemaPeaje sistemaPeaje = new SistemaPeaje();
     private SistemaUsuario sistemaUsuario = new SistemaUsuario();
@@ -86,25 +84,19 @@ public class Fachada implements Observable {
         return sistemaPeaje.emularTransito(puesto, vehiculo);
     }
     
-    @Override
-    public void agregar(Observador observador) {
-        if (!observadores.contains(observador)) {
-            observadores.add(observador);
-        }
+    public TipoBonificacion buscarTipoBonifPorPos(int pos) {
+        return sistemaPeaje.buscarTipoBonifPorPos(pos);
     }
 
-    @Override
-    public void quitar(Observador observador) {
-        if (observadores.contains(observador)) {
-            observadores.remove(observador);
-        }
+    public Propietario buscarProp(String cedula) {
+        return sistemaUsuario.buscarProp(cedula);
     }
 
-    @Override
-    public void avisar(Object evento) {
-        List<Observador> observadoresTemporal = new ArrayList<>(observadores);
-        for (Observador observador : observadoresTemporal) {
-            observador.actualizar(this, evento);
-        }
+    public void asignarBonificacion(Propietario prop, TipoBonificacion tipoBonif, Puesto puesto) throws PeajeException {
+        sistemaPeaje.asignarBonificacion(prop, tipoBonif, puesto);
+    }
+
+    public void cerrarSesion(Administrador admin) {
+        sistemaUsuario.cerrarSesion(admin);
     }
 }

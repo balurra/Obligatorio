@@ -35,14 +35,14 @@ public class Bonificacion {
     public int calcularPorcentajeDesc(Vehiculo vehiculo, Date fechaTransito) {
         int descuento = 0;
         if (tipo instanceof Exonerado) {
-            descuento = 100;
+            descuento = tipo.getPorcentaje();
         } else if (tipo instanceof Frecuente) {
             if (validarFrecuente(vehiculo, fechaTransito)) {
-                descuento = 50;
+                descuento = tipo.getPorcentaje();
             }
         } else if (tipo instanceof Trabajador) {
             if (validarTrabajador(fechaTransito)) {
-                descuento = 80;
+                descuento = tipo.getPorcentaje();
             }
         }
         return descuento;
