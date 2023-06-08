@@ -1,0 +1,20 @@
+package dominio.peaje;
+
+public abstract class TipoBonificacion {
+    
+    private String nombre;
+    private int porcentaje;
+
+    public TipoBonificacion(String nombre, int porcentaje) {
+        this.nombre = nombre;
+        this.porcentaje = porcentaje;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public int getPorcentaje() {
+        return porcentaje;
+    }
+}
