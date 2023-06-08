@@ -65,6 +65,7 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
                 return canEdit [columnIndex];
             }
         });
+        tbl_bonificacion.getTableHeader().setReorderingAllowed(false);
         tbl_bonificacion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tbl_bonificacionPropertyChange(evt);

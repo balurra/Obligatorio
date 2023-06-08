@@ -104,6 +104,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
                 return canEdit [columnIndex];
             }
         });
+        tbl_tarifas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_tarifas);
         if (tbl_tarifas.getColumnModel().getColumnCount() > 0) {
             tbl_tarifas.getColumnModel().getColumn(0).setResizable(false);

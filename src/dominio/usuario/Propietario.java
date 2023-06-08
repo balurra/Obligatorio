@@ -1,9 +1,11 @@
 package dominio.usuario;
 
+import dominio.peaje.EventosProp;
 import dominio.peaje.Bonificacion;
 import dominio.peaje.Notificacion;
 import dominio.peaje.Puesto;
 import dominio.peaje.Recarga;
+import dominio.peaje.Transito;
 import dominio.peaje.Vehiculo;
 import java.util.ArrayList;
 
@@ -54,6 +56,35 @@ public class Propietario extends Usuario {
         
         return bonif;
     } 
+    
+    public void borrarNotificaciones() {
+        this.notificaciones.clear();
+        avisar(EventosProp.CAMBIO_DATOS);
+    }
+
+    public void recargarSaldo(int monto) { //falta exception
+        if(monto>-1) this.saldo+=monto;
+        avisar(EventosProp.CAMBIO_DATOS);
+    }
+
+    public ArrayList<Transito> transitosRealizados(){
+        ArrayList<Transito> transitos = new ArrayList();
+        for(Vehiculo v : vehiculos){
+            for (Transito t : v.getTransitos()) {
+                transitos.add(t);
+            }
+        }
+        return transitos;
+    }
+    
+    //duda experto
+    public ArrayList<Transito> transitosDelPropietario(){
+        ArrayList<Transito> transitos = new ArrayList<>();
+        for(Vehiculo v:vehiculos){
+            v.asignarTransitos(transitos);
+        }
+        return transitos;        
+    }
     
     @Override
     public boolean validarUsuario() {

@@ -8,6 +8,7 @@ public class LoginProp extends Login {
 
     public LoginProp(Frame parent, boolean modal) {
         super(parent, modal);
+        setTitle("Ingresar como propietario");
     }
 
     @Override

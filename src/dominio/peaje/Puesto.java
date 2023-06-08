@@ -39,4 +39,24 @@ public class Puesto {
     public ArrayList<Tarifa> getTarifas() {
         return tarifas;
     }
+    
+    public Tarifa tarifaTransito(CatVehiculo categoria) {
+        Tarifa ret = null;
+        for(Tarifa t:tarifas){
+            if(t.getCategoriaVehiculo().equals(categoria)){
+                ret = t;
+            }
+        } 
+        return ret;
+    }
+    
+    public int gastoVehiculo(CatVehiculo categoria) {
+        int ret=0;
+        for(Tarifa t:tarifas){
+            if(t.getCategoriaVehiculo().equals(categoria)){
+                ret+=t.getMonto();
+            }
+        }
+        return ret;
+    }
 }

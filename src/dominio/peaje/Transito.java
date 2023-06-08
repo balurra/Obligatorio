@@ -35,7 +35,15 @@ public class Transito {
         return bonif;
     }
 
+    public int getMontoBonif() {
+        return montoBonif;
+    }
+    
     public Date getFecha() {
         return fecha;
+    }
+
+    public Tarifa tarifaTransito(){
+        return this.puesto.tarifaTransito(this.vehiculo.getCategoria());
     }
 }

@@ -84,6 +84,7 @@ public class SistemaPeaje {
         if (prop.getSaldo() >= costo) {
             transito = agregarTransito(puesto, vehiculo, costo, fechaTransito, bonif, montoBonif);
             enviarNotifs(fechaTransito, puesto, vehiculo);
+            vehiculo.getProp().avisar(EventosProp.CAMBIO_DATOS);
         } else {
             throw new PeajeException("Saldo insuficiente");
         }
@@ -99,6 +100,7 @@ public class SistemaPeaje {
         if (!tieneBonifEnPuesto(prop, puesto)) {
             Bonificacion bonif = new Bonificacion(tipoBonif, puesto);
             prop.getBonificaciones().add(bonif);
+            prop.avisar(EventosProp.CAMBIO_DATOS);
         } else {
             throw new PeajeException("El propietario ya tiene una bonificación en ese puesto");
         }  

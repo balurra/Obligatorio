@@ -65,4 +65,18 @@ public class Vehiculo extends Observable {
     public void setCategoria(CatVehiculo categoria) {
         this.categoria = categoria;
     }
+    
+    public int gastosTotalesEnPeajes(){
+        int total = 0;
+        for(Transito t : transitos){
+            total += t.getCosto();
+        }
+        return total;
+    }
+
+    public void asignarTransitos(ArrayList<Transito> transitos) {
+        for(Transito t:this.transitos){
+            transitos.add(t);
+        }    
+    }
 }
