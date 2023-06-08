@@ -5,16 +5,15 @@ import java.util.Date;
 public class Transito {
     private Puesto puesto;
     private Vehiculo vehiculo;
-    private Date fecha;
+    private Date fecha = new Date();
     private int costo;
     private Bonificacion bonif;
     private int montoBonif;
 
-    public Transito(Puesto puesto, Vehiculo vehiculo, int costo, Date fecha, Bonificacion bonif, int montoBonif) {
+    public Transito(Puesto puesto, Vehiculo vehiculo, int costo, Bonificacion bonif, int montoBonif) {
         this.puesto = puesto;
         this.vehiculo = vehiculo;
         this.costo = costo;
-        this.fecha = fecha;
         this.bonif = bonif;
         this.montoBonif = montoBonif;
     }

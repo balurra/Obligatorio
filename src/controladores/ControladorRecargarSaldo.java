@@ -2,6 +2,7 @@ package controladores;
 
 import dominio.peaje.EventosProp;
 import dominio.usuario.Propietario;
+import dominio.usuario.UsuarioException;
 import observer.Observable;
 import observer.Observador;
 import vistas.VistaRecargarSaldo;
@@ -17,8 +18,18 @@ public class ControladorRecargarSaldo implements Observador {
         mostrarDatos();
     } 
 
-    public void recargarSaldo(int monto) {
-        prop.recargarSaldo(monto);
+    public void recargarSaldo(String monto) {
+        try {
+            if (monto.chars().allMatch(Character::isDigit)) {
+                int montoInt = Integer.parseInt(monto);
+                prop.recargarSaldo(montoInt);
+                vista.mostrarExito("Se agregó la recarga a la lista de pendientes de aprobación");
+            } else  {
+                vista.mostrarError("Ingresar números");
+            }
+        } catch(UsuarioException e) {
+            vista.mostrarError(e.getMessage());
+        }
     }
 
     private void mostrarDatos() {

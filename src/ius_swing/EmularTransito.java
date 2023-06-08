@@ -3,7 +3,6 @@ package ius_swing;
 import controladores.ControladorEmularTransito;
 import dominio.peaje.Puesto;
 import dominio.peaje.Tarifa;
-import dominio.peaje.Vehiculo;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +23,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
         tbl_tarifas.setModel(model);
         model.addColumn("Categoría");
         model.addColumn("Monto");
+        cargarTarifas(cmb_puesto.getSelectedIndex());
     }
 
     @SuppressWarnings("unchecked")
@@ -164,9 +164,9 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        Puesto puesto = controlador.buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
-        Vehiculo vehiculo = controlador.buscarVehiculo(txt_matricula.getText());
-        controlador.emularTransito(puesto, vehiculo);
+        int puestoPos = cmb_puesto.getSelectedIndex();
+        String matricula = txt_matricula.getText();
+        controlador.emularTransito(puestoPos, matricula);
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void txt_matriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_matriculaActionPerformed
@@ -174,14 +174,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
 
     private void cmb_puestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_puestoActionPerformed
         if (seInicializo) {
-            model.setRowCount(0);
-            Puesto puesto = controlador.buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
-            for (Tarifa t : puesto.getTarifas()) {
-                model.addRow(new Object [] {
-                    t.getCategoriaVehiculo().getNombre(),
-                    t.getMonto()
-                });
-            }
+            cargarTarifas(cmb_puesto.getSelectedIndex());
         }
     }//GEN-LAST:event_cmb_puestoActionPerformed
 
@@ -198,7 +191,17 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
     private javax.swing.JTable tbl_tarifas;
     private javax.swing.JTextField txt_matricula;
     // End of variables declaration//GEN-END:variables
-
+    private void cargarTarifas(int puestoPos) {
+        Puesto puesto = controlador.buscarPuestoPorPos(puestoPos);
+        model.setRowCount(0);
+        for (Tarifa t : puesto.getTarifas()) {
+            model.addRow(new Object [] {
+                t.getCategoriaVehiculo().getNombre(),
+                t.getMonto()
+            });
+        }
+    }
+    
     @Override
     public void cargarPuestos(List<Puesto> puestos) {
         for (Puesto p : puestos) {

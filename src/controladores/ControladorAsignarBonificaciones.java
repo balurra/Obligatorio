@@ -5,9 +5,11 @@ import dominio.peaje.PeajeException;
 import dominio.peaje.Puesto;
 import dominio.peaje.TipoBonificacion;
 import dominio.usuario.Propietario;
+import observer.Observable;
+import observer.Observador;
 import vistas.VistaAsignarBonificaciones;
 
-public class ControladorAsignarBonificaciones {
+public class ControladorAsignarBonificaciones implements Observador {
     private Fachada fachada = Fachada.getInstancia();
     private VistaAsignarBonificaciones vista;
 
@@ -17,28 +19,56 @@ public class ControladorAsignarBonificaciones {
         vista.cargarPuestos(fachada.getPuestos());
     }
 
-    public TipoBonificacion buscarTipoBonifPorPos(int pos) {
+    private TipoBonificacion buscarTipoBonifPorPos(int pos) {
         return fachada.buscarTipoBonifPorPos(pos);
     }
 
-    public Puesto buscarPuestoPorPos(int pos) {
+    private Puesto buscarPuestoPorPos(int pos) {
         return fachada.buscarPuestoPorPos(pos);
     }
 
     public Propietario buscarProp(String cedula) {
-        Propietario prop = fachada.buscarProp(cedula);
-        if (prop  == null) {
-            vista.mostrarError("No existe el propietario");
+        if (!cedula.isEmpty()) {
+            Propietario prop = fachada.buscarProp(cedula);
+            if (prop != null) {
+                vista.actualizarTabla(prop);
+                prop.agregar(this);
+                return prop;
+            } else {
+                vista.mostrarError("No existe el propietario");
+            }
+        } else {
+            vista.mostrarError("Ingresar cédula");
         }
-        return prop;
+        return null;
     }
 
-    public void asignarBonificacion(Propietario prop, TipoBonificacion tipoBonif, Puesto puesto) {
-        try {
-            fachada.asignarBonificacion(prop, tipoBonif, puesto);
-            vista.mostrarExito("Bonificación asignada");
-        } catch(PeajeException e) {
-            vista.mostrarError(e.getMessage());
+    public void asignarBonificacion(int posBonif, int posPuesto, String cedula) {
+        if (posBonif == -1) {
+            vista.mostrarError("Seleccionar tipo de bonificación");
+        } else if (posPuesto == -1) {
+            vista.mostrarError("Seleccionar puesto");
+        } else if (cedula.isEmpty()) {
+            vista.mostrarError("Ingresar cédula");
+        } else {
+            TipoBonificacion tipoBonif = buscarTipoBonifPorPos(posBonif);
+            Puesto puesto = buscarPuestoPorPos(posPuesto);
+            Propietario prop = buscarProp(cedula);
+            if (prop == null) {
+                vista.mostrarError("No existe el propietario");
+            } else  {
+                try {
+                    fachada.asignarBonificacion(prop, tipoBonif, puesto);
+                    vista.mostrarExito("Bonificación asignada");
+                } catch(PeajeException e) {
+                    vista.mostrarError(e.getMessage());
+                }
+            }
         }
+    }
+
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        vista.actualizarTabla((Propietario)origen);
     }
 }

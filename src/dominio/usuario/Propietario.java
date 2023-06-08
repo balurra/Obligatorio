@@ -8,6 +8,7 @@ import dominio.peaje.Recarga;
 import dominio.peaje.Transito;
 import dominio.peaje.Vehiculo;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Propietario extends Usuario {
     private int saldo;
@@ -58,13 +59,18 @@ public class Propietario extends Usuario {
     } 
     
     public void borrarNotificaciones() {
-        this.notificaciones.clear();
+        notificaciones.clear();
         avisar(EventosProp.CAMBIO_DATOS);
     }
 
-    public void recargarSaldo(int monto) { //falta exception
-        if(monto>-1) this.saldo+=monto;
-        avisar(EventosProp.CAMBIO_DATOS);
+    public void recargarSaldo(int monto) throws UsuarioException {
+        if(monto > 0) {
+            Recarga recarga = new Recarga(monto, this);
+            recargas.add(recarga);
+            avisar(EventosProp.CAMBIO_DATOS);
+        } else  {
+            throw new UsuarioException("Monto inválido");
+        }
     }
 
     public ArrayList<Transito> transitosRealizados(){
@@ -75,6 +81,13 @@ public class Propietario extends Usuario {
             }
         }
         return transitos;
+    }
+    
+    public void recargaAprobada(int monto, Date fecha) {
+        saldo += monto;
+        Notificacion notif = new Notificacion(fecha + "Tu recarga de $" + monto + " fue aprobada");
+        notificaciones.add(notif);
+        avisar(EventosProp.CAMBIO_DATOS);
     }
     
     //duda experto

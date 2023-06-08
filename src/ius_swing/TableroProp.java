@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import vistas.VistaTableroProp;
 
-public class TableroProp extends javax.swing.JDialog implements VistaTableroProp {
+public class TableroProp extends javax.swing.JFrame implements VistaTableroProp {
     private ControladorTableroProp controlador;
     private Propietario prop;
     private DefaultTableModel model1;
@@ -71,12 +71,16 @@ public class TableroProp extends javax.swing.JDialog implements VistaTableroProp
         transitos.sort((obj1, obj2) -> obj2.getFecha().compareTo(obj1.getFecha()));
         model3.setRowCount(0);
         for (Transito t : transitos) {
+            String bonif = "Sin bonificación";
+            if (t.getBonif() != null) {
+                bonif = t.getBonif().getTipoBonificacion().getNombre();
+            }
             model3.addRow(new Object [] {
                 t.getPuesto().getNombre(),
                 t.getVehiculo().getMatricula(),
                 t.tarifaTransito().getCategoriaVehiculo().getNombre(),
                 t.tarifaTransito().getMonto(),
-                t.getBonif().getTipoBonificacion().getNombre(), //puede ser null si no tiene bonif
+                bonif,
                 t.getMontoBonif(),
                 t.getCosto(),
                 t.getFecha()
@@ -89,11 +93,15 @@ public class TableroProp extends javax.swing.JDialog implements VistaTableroProp
         recargas.sort((obj1, obj2) -> obj2.getFechaIniciada().compareTo(obj1.getFechaIniciada()));
         model4.setRowCount(0);
         for (Recarga r : recargas) {
+            String admin = "Pendiente";
+            if (r.getAdmin() != null) {
+                admin = r.getAdmin().getNombreCompleto();
+            }
             model4.addRow(new Object [] {
                 r.getFechaIniciada(),
                 r.getMonto(),
                 r.getEstado(),
-                r.getAdmin().getNombreCompleto() //puede ser null si no se aprobo
+                admin
             });
         }
     }
@@ -116,7 +124,7 @@ public class TableroProp extends javax.swing.JDialog implements VistaTableroProp
     }
 
     private void mostrarProximaInterfaz() {
-        RecargarSaldo recargarSaldo = new RecargarSaldo(null,false, prop);
+        RecargarSaldo recargarSaldo = new RecargarSaldo(this,false, prop);
         recargarSaldo.setVisible(true);
     }
     
@@ -188,6 +196,11 @@ public class TableroProp extends javax.swing.JDialog implements VistaTableroProp
         tbl_notifs = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         lbl_saldo.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
         lbl_saldo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/dinero.png"))); // NOI18N
@@ -527,8 +540,14 @@ public class TableroProp extends javax.swing.JDialog implements VistaTableroProp
     }//GEN-LAST:event_btn_recargar_saldoActionPerformed
 
     private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
+        controlador.cerrarSesion(prop);
         dispose();
     }//GEN-LAST:event_btn_cerrarActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        controlador.cerrarSesion(prop);
+    }//GEN-LAST:event_formWindowClosed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_borrar_notificaciones;
     private javax.swing.JButton btn_cerrar;

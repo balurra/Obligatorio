@@ -125,7 +125,7 @@ public class TableroAdmin extends javax.swing.JFrame implements VistaTableroAdmi
     }//GEN-LAST:event_btn_asignarBonifsActionPerformed
 
     private void btn_aprobarRecargasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aprobarRecargasActionPerformed
-        AprobarRecargas aprobarRecargas = new AprobarRecargas(this, false);
+        AprobarRecargas aprobarRecargas = new AprobarRecargas(this, false, admin);
         aprobarRecargas.setVisible(true);
     }//GEN-LAST:event_btn_aprobarRecargasActionPerformed
 

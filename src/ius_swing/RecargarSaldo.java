@@ -2,6 +2,7 @@ package ius_swing;
 
 import controladores.ControladorRecargarSaldo;
 import dominio.usuario.Propietario;
+import javax.swing.JOptionPane;
 import vistas.VistaRecargarSaldo;
 
 public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarSaldo {
@@ -103,8 +104,7 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
     }//GEN-LAST:event_tf_montoActionPerformed
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
-        int monto = Integer.parseInt(tf_monto.getText());
-        controlador.recargarSaldo(monto);
+        controlador.recargarSaldo(tf_monto.getText());
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -119,5 +119,23 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
     public void mostrarDatos(Propietario prop) {
         lbl_saldo.setText("$" + prop.getSaldo());
         lbl_nombre_propietario.setText(prop.getNombreCompleto());
+    }
+    
+    @Override
+    public void mostrarExito(String mensaje) {
+        JOptionPane.showMessageDialog(
+                    this,
+                    mensaje,
+                    "¡Éxito!",
+                    JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    @Override
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(
+                    this,
+                    mensaje,
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
     }
 }

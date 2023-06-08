@@ -11,9 +11,11 @@ import dominio.peaje.Vehiculo;
 import dominio.usuario.Administrador;
 import dominio.usuario.Propietario;
 import dominio.usuario.Sesion;
+import dominio.usuario.Usuario;
 import dominio.usuario.UsuarioException;
 import java.util.List;
 import observer.Observable;
+import observer.Observador;
 
 public class Fachada extends Observable {
     private static Fachada instancia = new Fachada();
@@ -55,10 +57,6 @@ public class Fachada extends Observable {
     public List<TipoBonificacion> getTiposBonif() {
         return sistemaPeaje.getTiposBonif();
     }
-    
-    public List<Recarga> getRecargas() {
-        return sistemaPeaje.getRecargas();
-    }
 
     public Puesto agregarPuesto(Puesto puesto) {
         return sistemaPeaje.agregarPuesto(puesto);
@@ -96,7 +94,23 @@ public class Fachada extends Observable {
         sistemaPeaje.asignarBonificacion(prop, tipoBonif, puesto);
     }
 
-    public void cerrarSesion(Administrador admin) {
-        sistemaUsuario.cerrarSesion(admin);
+    public void cerrarSesion(Usuario usuario) {
+        sistemaUsuario.cerrarSesion(usuario);
+    }
+
+    public List<Propietario> getPropietarios() {
+        return sistemaUsuario.getPropietarios();
+    }
+
+    public void aprobarRecarga(int idRecarga, Administrador admin) {
+        sistemaUsuario.aprobarRecarga(idRecarga, admin);
+    }
+
+    public void agregarObservador(Observador obs) {
+        sistemaUsuario.agregarObservador(obs);
+    }
+
+    public List<Recarga> getRecargasPendientes() {
+        return sistemaUsuario.recargasPendientes();
     }
 }

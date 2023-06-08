@@ -1,7 +1,9 @@
 package dominio.usuario;
 
+import dominio.peaje.Recarga;
 import java.util.ArrayList;
 import java.util.List;
+import observer.Observador;
 
 public class SistemaUsuario {
     private final List<Propietario> propietarios = new ArrayList<>();
@@ -10,6 +12,10 @@ public class SistemaUsuario {
     
     public List<Sesion> getLogueados() {
         return logueados;
+    }
+    
+    public List<Propietario> getPropietarios() {
+        return propietarios;
     }
 
     public Sesion loginProp(String cedula, String password) {
@@ -47,6 +53,17 @@ public class SistemaUsuario {
         return sesion;
     }
     
+    public void aprobarRecarga(int idRecarga, Administrador admin) {
+        Recarga recarga = buscarRecarga(idRecarga);
+        recarga.aprobar(admin);
+    }
+    
+    public void agregarObservador(Observador obs) {
+        for (Propietario p : propietarios) {
+            p.agregar(obs);
+        }
+    }
+    
     public Propietario registrarProp(Propietario prop) {
         Propietario retorno = null;
         if (validarListaPropietarios(prop)) {
@@ -74,16 +91,38 @@ public class SistemaUsuario {
         return retorno;
     }
      
-    public void cerrarSesion(Administrador admin) {
+    public void cerrarSesion(Usuario usuario) {
         Sesion sesion = null;
         for (Sesion s : logueados) {
-            if (admin.equals(s.getUsuario())) {
+            if (usuario.equals(s.getUsuario())) {
                 sesion = s;
             }
         }
         if (sesion != null) {
             logueados.remove(sesion);
         }
+    }
+    
+    public Recarga buscarRecarga(int id) {
+        Recarga recarga = null;
+        for (Recarga r : recargasPendientes()) {
+            if (r.getId() == id) {
+                recarga = r;
+            }
+        }
+        return recarga;
+    }
+    
+    public ArrayList<Recarga> recargasPendientes(){
+        ArrayList<Recarga> recargas = new ArrayList();
+        for (Propietario p : propietarios) {
+            for (Recarga r : p.getRecargas()) {
+                if (r.getEstado().equals("Pendiente")) {
+                    recargas.add(r);
+                }
+            }
+        }
+        return recargas;
     }
     
     private Sesion login(String cedula, String password, Usuario usuario) {

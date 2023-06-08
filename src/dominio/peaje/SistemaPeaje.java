@@ -9,8 +9,19 @@ public class SistemaPeaje {
     private ArrayList<Puesto> puestos = new ArrayList<>();
     private ArrayList<Vehiculo> vehiculos = new ArrayList<>();
     private ArrayList<TipoBonificacion> tiposBonif = new ArrayList<>();
-    private ArrayList<Recarga> recargas = new ArrayList<>();
     private int alertaSaldoMinimo = 100;
+    
+    public List<TipoBonificacion> getTiposBonif() {
+        return tiposBonif;
+    }
+
+    public ArrayList<Puesto> getPuestos() {
+        return puestos;
+    }
+
+    public ArrayList<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
     
     public Puesto agregarPuesto(Puesto puesto) {
         Puesto retorno = null;
@@ -40,22 +51,6 @@ public class SistemaPeaje {
         return retorno;
     }
     
-    public List<TipoBonificacion> getTiposBonif() {
-        return tiposBonif;
-    }
-
-    public ArrayList<Puesto> getPuestos() {
-        return puestos;
-    }
-
-    public ArrayList<Vehiculo> getVehiculos() {
-        return vehiculos;
-    }
-
-    public ArrayList<Recarga> getRecargas() {
-        return recargas;
-    }
-    
     public void agregarTipoBonif (TipoBonificacion tipo) {
         if (validarListaTiposBonif(tipo)) {
             tiposBonif.add(tipo);
@@ -66,34 +61,34 @@ public class SistemaPeaje {
         return puestos.get(pos);
     }
     
+    public TipoBonificacion buscarTipoBonifPorPos(int pos) {
+        return tiposBonif.get(pos);
+    }
+    
     public Transito emularTransito(Puesto puesto, Vehiculo vehiculo) throws PeajeException {
         CatVehiculo catVehiculo = vehiculo.getCategoria();
         Tarifa tarifa = buscarTarifaCorrespondiente(puesto, catVehiculo);
         Propietario prop = vehiculo.getProp();
-        Date fechaTransito = new Date();
         int costo = tarifa.getMonto();
         Transito transito = null;
         Bonificacion bonif = prop.bonifParaPuesto(puesto);
         int montoBonif = 0;
         
         if (bonif != null) {
-            montoBonif = calcularDesc(costo, bonif, vehiculo, fechaTransito);
+            Date fechaActual = new Date();
+            montoBonif = calcularDesc(costo, bonif, vehiculo, fechaActual);
             costo = costo - montoBonif;
         }
         
         if (prop.getSaldo() >= costo) {
-            transito = agregarTransito(puesto, vehiculo, costo, fechaTransito, bonif, montoBonif);
-            enviarNotifs(fechaTransito, puesto, vehiculo);
+            transito = agregarTransito(puesto, vehiculo, costo, bonif, montoBonif);
+            enviarNotifs(transito.getFecha(), puesto, vehiculo);
             vehiculo.getProp().avisar(EventosProp.CAMBIO_DATOS);
         } else {
             throw new PeajeException("Saldo insuficiente");
         }
         
         return transito;
-    }
-    
-    public TipoBonificacion buscarTipoBonifPorPos(int pos) {
-        return tiposBonif.get(pos);
     }
     
     public void asignarBonificacion(Propietario prop, TipoBonificacion tipoBonif, Puesto puesto) throws PeajeException {
@@ -103,15 +98,15 @@ public class SistemaPeaje {
             prop.avisar(EventosProp.CAMBIO_DATOS);
         } else {
             throw new PeajeException("El propietario ya tiene una bonificación en ese puesto");
-        }  
+        }
     }
     
     private int calcularDesc(int costo, Bonificacion bon, Vehiculo v, Date fecha) {
         return costo * (bon.calcularPorcentajeDesc(v, fecha)/100);
     }
     
-    private Transito agregarTransito(Puesto p, Vehiculo v, int costo, Date fecha, Bonificacion bon, int montoBonif){
-        Transito transito = new Transito(p, v, costo, fecha, bon, montoBonif);
+    private Transito agregarTransito(Puesto p, Vehiculo v, int costo, Bonificacion bon, int montoBonif){
+        Transito transito = new Transito(p, v, costo, bon, montoBonif);
         Propietario prop = v.getProp();
         v.getTransitos().add(transito);
         int saldoProp = prop.getSaldo();
@@ -122,12 +117,12 @@ public class SistemaPeaje {
     private void enviarNotifs(Date fecha, Puesto p, Vehiculo v) {
         Notificacion notif = new Notificacion(fecha + " Pasaste por el puesto " +
                                               p.getNroPuesto() + " con el vehículo " + 
-                                              v.getMatricula(), fecha);
+                                              v.getMatricula());
         Propietario prop = v.getProp();
         prop.getNotificaciones().add(notif);
         if (prop.getSaldo() < alertaSaldoMinimo) {
             Notificacion notifSaldo = new Notificacion("Tu saldo actual es de $" + prop.getSaldo()
-                                                       + ". Te recomendamos hacer una recarga", fecha);
+                                                       + ". Te recomendamos hacer una recarga");
             prop.getNotificaciones().add(notifSaldo);
         }
     }
@@ -143,6 +138,17 @@ public class SistemaPeaje {
         
         return tarifa;
     }
+    
+    private boolean tieneBonifEnPuesto(Propietario prop, Puesto puesto) {
+        boolean exito = false;
+        ArrayList<Bonificacion> bonifsProp = prop.getBonificaciones();
+        for (Bonificacion b : bonifsProp) {
+            if (puesto.equals(b.getPuesto())) {
+                exito = true;
+            }
+        }
+        return exito;
+    }
 
     private boolean validarListaTiposBonif(TipoBonificacion tipo) {
         return !tiposBonif.contains(tipo);
@@ -154,16 +160,5 @@ public class SistemaPeaje {
     
     private boolean validarListaPuestos(Puesto puesto) {
         return !puestos.contains(puesto);
-    }
-
-    private boolean tieneBonifEnPuesto(Propietario prop, Puesto puesto) {
-        boolean exito = false;
-        ArrayList<Bonificacion> bonifsProp = prop.getBonificaciones();
-        for (Bonificacion b : bonifsProp) {
-            if (puesto.equals(b.getPuesto())) {
-                exito = true;
-            }
-        }
-        return exito;
     }
 }

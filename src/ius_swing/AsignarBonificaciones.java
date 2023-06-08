@@ -8,11 +8,9 @@ import dominio.usuario.Propietario;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import observer.Observable;
-import observer.Observador;
 import vistas.VistaAsignarBonificaciones;
 
-public class AsignarBonificaciones extends javax.swing.JDialog implements VistaAsignarBonificaciones, Observador {
+public class AsignarBonificaciones extends javax.swing.JDialog implements VistaAsignarBonificaciones {
     private final ControladorAsignarBonificaciones controlador;
     private final DefaultTableModel model;
     
@@ -219,38 +217,17 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
     }//GEN-LAST:event_cmb_puestoActionPerformed
 
     private void btn_buscarPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarPropActionPerformed
-        if (!txt_cedula.getText().isEmpty()) {
-            Propietario prop = controlador.buscarProp(txt_cedula.getText());
-            if (prop != null) {
-                lbl_prop.setText(prop.getNombreCompleto());
-                actualizarTabla(prop);
-            }
-        } else {
-            mostrarError("Ingresar cédula");
+        Propietario prop = controlador.buscarProp(txt_cedula.getText());
+        if (prop != null) {
+            lbl_prop.setText(prop.getNombreCompleto());
         }
     }//GEN-LAST:event_btn_buscarPropActionPerformed
 
     private void btn_asignarBonifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asignarBonifActionPerformed
-        if (cmb_bonif.getSelectedItem() != null){
-            if (cmb_puesto.getSelectedItem() != null) {
-                if (!txt_cedula.getText().isEmpty()) {
-                    TipoBonificacion tipoBonif = controlador.buscarTipoBonifPorPos(cmb_bonif.getSelectedIndex());
-                    Puesto puesto = controlador.buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
-                    Propietario prop = controlador.buscarProp(txt_cedula.getText());
-                    if (prop != null) {
-                        controlador.asignarBonificacion(prop, tipoBonif, puesto);
-                        prop.agregar(this);
-                        prop.avisar(evt);
-                    }
-                } else {
-                    mostrarError("Ingresar cédula");
-                }
-            } else {
-                mostrarError("Seleccionar puesto");
-            }
-        } else  {
-            mostrarError("Seleccionar tipo de bonificación");
-        }
+        int posBonif = cmb_bonif.getSelectedIndex();
+        int posPuesto = cmb_puesto.getSelectedIndex();
+        String cedula = txt_cedula.getText();
+        controlador.asignarBonificacion(posBonif, posPuesto, cedula);
     }//GEN-LAST:event_btn_asignarBonifActionPerformed
 
     private void txt_cedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cedulaActionPerformed
@@ -259,7 +236,8 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
     private void tbl_bonificacionPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbl_bonificacionPropertyChange
     }//GEN-LAST:event_tbl_bonificacionPropertyChange
 
-    private void actualizarTabla(Propietario prop) {
+    @Override
+    public void actualizarTabla(Propietario prop) {
         model.setRowCount(0);
         for (Bonificacion b : prop.getBonificaciones()) {
             model.addRow(new Object [] {
@@ -300,12 +278,6 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
     }
-    
-    @Override
-    public void actualizar(Observable origen, Object evento) {
-        actualizarTabla((Propietario)origen);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_asignarBonif;
     private javax.swing.JButton btn_buscarProp;

@@ -1,5 +1,6 @@
 package controladores;
 
+import dominio.Fachada;
 import dominio.usuario.Propietario;
 import observer.Observable;
 import observer.Observador;
@@ -9,6 +10,7 @@ import vistas.VistaTableroProp;
 public class ControladorTableroProp implements Observador{
     private Propietario prop;
     private VistaTableroProp vista;
+    private Fachada fachada = Fachada.getInstancia();
 
     public ControladorTableroProp(Propietario prop, VistaTableroProp vista) {
         this.prop = prop;
@@ -52,6 +54,10 @@ public class ControladorTableroProp implements Observador{
 
     public void borrarNotificaciones() {
         prop.borrarNotificaciones();
+    }
+    
+    public void cerrarSesion(Propietario prop){
+        fachada.cerrarSesion(prop);
     }
     
     @Override
