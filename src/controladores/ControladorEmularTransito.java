@@ -28,24 +28,39 @@ public class ControladorEmularTransito  {
         return vehiculo;
     }
     
-    public void emularTransito(Puesto puesto, Vehiculo vehiculo) {
-        try {
-            Transito t = fachada.emularTransito(puesto, vehiculo);
-            String bonif = "Sin bonificación";
-            String nombreProp = t.getVehiculo().getProp().getNombreCompleto();
-            String catVehiculo = t.getVehiculo().getCategoria().getNombre();
-            int costo = t.getCosto();
-            int saldoPropRestante = t.getVehiculo().getProp().getSaldo();
-            if (t.getBonif() != null) {
-                bonif = t.getBonif().getTipoBonificacion().getNombre();
+    public void emularTransito(int puestoPos, String matricula) {
+        if (puestoPos == -1) {
+            vista.mostrarError("Seleccionar puesto");
+        } else if (matricula.isEmpty()) {
+            vista.mostrarError("Ingresar matrícula");
+        } else  {
+            Puesto puesto = buscarPuestoPorPos(puestoPos);
+            Vehiculo vehiculo = buscarVehiculo(matricula);
+            if (vehiculo != null) {
+                try {
+                    Transito t = fachada.emularTransito(puesto, vehiculo);
+                    mostrarMensaje(t);
+                } catch(PeajeException e) {
+                    vista.mostrarError(e.getMessage());
+                }
             }
-
-            String mensaje = nombreProp + " - " + catVehiculo +
-                             " - " + bonif + " - Total: " + costo +
-                             " - Saldo disponible: " + saldoPropRestante;
-            vista.mostrarExito(mensaje);
-        } catch(PeajeException e) {
-            vista.mostrarError(e.getMessage());
         }
+    }
+    
+    private void mostrarMensaje(Transito t) {
+        String bonif = "Sin bonificación";
+        String nombreProp = t.getVehiculo().getProp().getNombreCompleto();
+        String catVehiculo = t.getVehiculo().getCategoria().getNombre();
+        int costo = t.getCosto();
+        int saldoPropRestante = t.getVehiculo().getProp().getSaldo();
+        if (t.getBonif() != null) {
+            bonif = t.getBonif().getTipoBonificacion().getNombre();
+        }
+
+        String mensaje = nombreProp + " - " + catVehiculo +
+                         " - " + bonif + " - Total: " + costo +
+                         " - Saldo disponible: " + saldoPropRestante;
+        
+        vista.mostrarExito(mensaje);
     }
 }

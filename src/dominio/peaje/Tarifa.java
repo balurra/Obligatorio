@@ -1,17 +1,12 @@
 package dominio.peaje;
 
 public class Tarifa {
-    private String nombre;
     private int monto;
     private CatVehiculo categoriaVehiculo;
 
     public Tarifa(int monto, CatVehiculo categoriaVehiculo) {
         this.monto = monto;
         this.categoriaVehiculo = categoriaVehiculo;
-    }
-
-    public String getNombre() {
-        return nombre;
     }
 
     public int getMonto() {
@@ -24,9 +19,5 @@ public class Tarifa {
 
     public CatVehiculo getCategoriaVehiculo() {
         return categoriaVehiculo;
-    }
-
-    public void setCategoriaVehiculo(CatVehiculo categoriaVehiculo) {
-        this.categoriaVehiculo = categoriaVehiculo;
     }
 }

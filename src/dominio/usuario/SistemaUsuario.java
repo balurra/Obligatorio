@@ -1,5 +1,8 @@
 package dominio.usuario;
 
+import dominio.Fachada;
+import dominio.peaje.EventosSistema;
+import dominio.peaje.Recarga;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,40 +14,34 @@ public class SistemaUsuario {
     public List<Sesion> getLogueados() {
         return logueados;
     }
-
-    public Sesion loginProp(String cedula, String password) {
-        Propietario propietario = null;
-        Sesion sesion = null;
-        
-        for (Propietario prop : propietarios) {
-            if (cedula.equals(prop.getCedula())) {
-                propietario = prop;
-            }
-        }
-        if (propietario != null) {
-            sesion = login(cedula, password, propietario);
-        }
-        return sesion;
+    
+    public List<Propietario> getPropietarios() {
+        return propietarios;
     }
     
+    public Sesion loginProp(String cedula, String password) {
+        Propietario prop = buscarProp(cedula);
+        if (prop != null && validarLogin(prop, cedula, password)) {
+            return login(prop);
+        }
+        return null;
+    }
+
     public Sesion loginAdmin(String cedula, String password) throws UsuarioException {
-        Administrador administrador = null;
-        Sesion sesion = null;
-        
-        for (Administrador admin : administradores) {
-            if (cedula.equals(admin.getCedula())) {
-                administrador = admin;
+        Administrador admin = buscarAdmin(cedula);
+        if (admin != null) {
+            if (validarLogin(admin, cedula, password)) {
+                validarListaLogueados(admin);
+                return login(admin);
             }
         }
-        if (administrador != null) {
-            if (validarListaLogueados(administrador)) {
-                sesion = login(cedula, password, administrador);
-            } else {
-                throw new UsuarioException("El administrador ya está logueado");
-            }
-        }
-        
-        return sesion;
+        return null;
+    }
+    
+    public void aprobarRecarga(int idRecarga, Administrador admin) {
+        Recarga recarga = buscarRecarga(idRecarga);
+        recarga.aprobar(admin);
+        Fachada.getInstancia().avisar(EventosSistema.CAMBIO_DATOS);
     }
     
     public Propietario registrarProp(Propietario prop) {
@@ -62,7 +59,7 @@ public class SistemaUsuario {
         }
     }
     
-     public Propietario buscarProp(String cedula) {
+    public Propietario buscarProp(String cedula) {
         Propietario retorno = null;
         
         for (Propietario prop : propietarios) {
@@ -74,26 +71,58 @@ public class SistemaUsuario {
         return retorno;
     }
      
-    public void cerrarSesion(Administrador admin) {
-        Sesion sesion = null;
-        for (Sesion s : logueados) {
-            if (admin.equals(s.getUsuario())) {
-                sesion = s;
-            }
-        }
+    public void cerrarSesion(Usuario usuario) {
+        Sesion sesion = buscarSesion(usuario);
         if (sesion != null) {
             logueados.remove(sesion);
         }
     }
     
-    private Sesion login(String cedula, String password, Usuario usuario) {
-        if (usuario != null &&
-            validarLogin(usuario, cedula, password)) {
-            Sesion sesion = new Sesion(usuario);
-            logueados.add(sesion);
-            return sesion;
+    public Recarga buscarRecarga(int id) {
+        Recarga recarga = null;
+        for (Recarga r : recargasPendientes()) {
+            if (r.getId() == id) {
+                recarga = r;
+            }
+        }
+        return recarga;
+    }
+    
+    public ArrayList<Recarga> recargasPendientes(){
+        ArrayList<Recarga> recargas = new ArrayList();
+        for (Propietario p : propietarios) {
+            for (Recarga r : p.recargasPendientes()) {
+                recargas.add(r);
+            }
+        }
+        return recargas;
+    }
+    
+    private Sesion buscarSesion(Usuario usuario) {
+        for (Sesion s : logueados) {
+            if (usuario.equals(s.getUsuario())) {
+                return s;
+            }
         }
         return null;
+    }
+    
+    private Administrador buscarAdmin(String cedula) {
+        Administrador retorno = null;
+        
+        for (Administrador admin : administradores) {
+            if (cedula.equals(admin.getCedula())) {
+                retorno = admin;
+            }
+        }
+
+        return retorno;
+    }
+    
+    private Sesion login(Usuario usuario) {
+        Sesion sesion = new Sesion(usuario);
+        logueados.add(sesion);
+        return sesion;
     }
     
     private static boolean validarLogin(Usuario usuario, String cedula, String password) {
@@ -109,12 +138,11 @@ public class SistemaUsuario {
         return !administradores.contains(admin) && admin.validarUsuario();
     }
     
-    private boolean validarListaLogueados(Usuario usuario) {
+    private void validarListaLogueados(Usuario usuario) throws UsuarioException {
         for(Sesion s : logueados) {
             if(s.getUsuario().equals(usuario)) {
-                return false;
+                throw new UsuarioException("El usuario ya está logueado");
             }
         }
-        return true;
     }
 }

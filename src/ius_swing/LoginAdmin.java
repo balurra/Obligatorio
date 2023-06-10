@@ -8,6 +8,7 @@ public class LoginAdmin extends Login{
 
     public LoginAdmin(Frame parent, boolean modal) {
         super(parent, modal);
+        setTitle("Ingresar como administrador");
     }
 
     @Override

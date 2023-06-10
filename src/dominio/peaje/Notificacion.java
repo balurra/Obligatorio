@@ -4,11 +4,10 @@ import java.util.Date;
 
 public class Notificacion {
     private String notificacion;
-    private Date fecha;
+    private Date fecha = new Date();
 
-    public Notificacion(String notificacion, Date fecha) {
+    public Notificacion(String notificacion) {
         this.notificacion = notificacion;
-        this.fecha = fecha;
     }
 
     public String getNotificacion() {

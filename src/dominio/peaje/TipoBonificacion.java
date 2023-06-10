@@ -17,4 +17,6 @@ public abstract class TipoBonificacion {
     public int getPorcentaje() {
         return porcentaje;
     }
+    
+    public abstract int retornarDesc(Transito transito);
 }

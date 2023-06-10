@@ -1,10 +1,11 @@
 package dominio.peaje;
 
 import dominio.usuario.Propietario;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import observer.Observable;
+import java.util.Date;
 
-public class Vehiculo extends Observable {
+public class Vehiculo {
     private String matricula;
     private String modelo;
     private String color;
@@ -35,8 +36,6 @@ public class Vehiculo extends Observable {
     public void setProp(Propietario prop) {
         this.prop = prop;
     }
-    
-    
 
     public ArrayList<Transito> getTransitos() {
         return transitos;
@@ -66,16 +65,35 @@ public class Vehiculo extends Observable {
         this.categoria = categoria;
     }
     
-    public void asignarTransitos(ArrayList<Transito> transitos) {
-            for(Transito t:this.transitos){
-                transitos.add(t);
-            }    }
-    
     public int gastosTotalesEnPeajes(){
-        int ret=0;
-        for(Transito t:transitos){
-            ret+=t.gastoVehiculo(this);
+        int total = 0;
+        for(Transito t : transitos){
+            total += t.getCosto();
         }
-        return ret;
+        return total;
+    }
+
+    public void agregarTransito(Transito transito) {
+        transitos.add(transito);
+    }
+    
+    public int cantTransitosEnFechaPorPuesto(Date fecha, Puesto puesto) {
+        int cant = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        for (Transito t : transitos) {
+            if (sdf.format(fecha).equals(sdf.format(t.getFecha()))) {
+                if (t.getPuesto().equals(puesto)) {
+                    cant++;
+                }
+            }
+        }
+        return cant;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        Vehiculo v = (Vehiculo)obj;
+        return matricula.equals(v.matricula);
     }
 }

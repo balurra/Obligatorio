@@ -8,6 +8,7 @@ public class LoginProp extends Login {
 
     public LoginProp(Frame parent, boolean modal) {
         super(parent, modal);
+        setTitle("Ingresar como propietario");
     }
 
     @Override
@@ -18,7 +19,7 @@ public class LoginProp extends Login {
     @Override
     public void mostrarProximaInterfaz(Usuario usuario) {
         dispose();
-        TableroProp tableroProp = new TableroProp(null, false, (Propietario)usuario); //null,false agregado
+        TableroProp tableroProp = new TableroProp((Propietario)usuario);
         tableroProp.setVisible(true);
     }
 }

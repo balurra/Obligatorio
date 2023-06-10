@@ -1,26 +1,37 @@
 package controladores;
 
-import dominio.Fachada;
-import dominio.usuario.EventosPropietario;
+import dominio.peaje.EventosProp;
 import dominio.usuario.Propietario;
+import dominio.usuario.UsuarioException;
 import observer.Observable;
 import observer.Observador;
 import vistas.VistaRecargarSaldo;
 
-public class ControladorRecargarSaldo implements Observador{
-    private Propietario prop;
+public class ControladorRecargarSaldo implements Observador {
     private VistaRecargarSaldo vista;
+    private Propietario prop;
 
-    public ControladorRecargarSaldo(Propietario prop, VistaRecargarSaldo vista) {
-        this.prop = prop;
+    public ControladorRecargarSaldo(VistaRecargarSaldo vista, Propietario prop) {
         this.vista = vista;
-        Fachada.getInstancia().agregar(this);
+        this.prop = prop;
+        prop.agregar(this);
         mostrarDatos();
     } 
-    
 
-    public void recargarSaldo(int monto) {
-        this.prop.recargarSaldo(monto,prop);
+    public void recargarSaldo(String monto) {
+        try {
+            if (monto.isEmpty()) {
+                vista.mostrarError("Ingresar monto");
+            } else if (!monto.matches("^-?\\d*\\.{0,1}\\d+$")) {
+                vista.mostrarError("Ingresar números");
+            } else {
+                int montoInt = Integer.parseInt(monto);
+                prop.recargarSaldo(montoInt);
+                vista.mostrarExito("Se agregó la recarga a la lista de pendientes de aprobación");
+            }
+        } catch(UsuarioException e) {
+            vista.mostrarError(e.getMessage());
+        }
     }
 
     private void mostrarDatos() {
@@ -29,9 +40,8 @@ public class ControladorRecargarSaldo implements Observador{
 
     @Override
     public void actualizar(Observable origen, Object evento) {
-        if(evento.equals(EventosPropietario.CAMBIO_DATOS)){
+        if (evento.equals(EventosProp.CAMBIO_DATOS)) {
             mostrarDatos();
-        }   
+        }    
     }
-    
 }

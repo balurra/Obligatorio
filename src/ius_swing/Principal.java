@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
-        setLocationRelativeTo(this);
+        setLocationRelativeTo(null);
         setTitle("Ingresar");
     }
 
@@ -20,6 +20,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btn_salir.setBackground(new java.awt.Color(227, 69, 65));
         btn_salir.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
@@ -32,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_loginAdmin.setBackground(new java.awt.Color(0, 153, 153));
-        btn_loginAdmin.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        btn_loginAdmin.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
         btn_loginAdmin.setForeground(new java.awt.Color(255, 255, 255));
         btn_loginAdmin.setText("Soy administrador");
         btn_loginAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -42,7 +43,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_loginProp.setBackground(new java.awt.Color(0, 153, 153));
-        btn_loginProp.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
+        btn_loginProp.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
         btn_loginProp.setForeground(new java.awt.Color(255, 255, 255));
         btn_loginProp.setText("Soy propietario");
         btn_loginProp.addActionListener(new java.awt.event.ActionListener() {
@@ -59,29 +60,27 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(0, 83, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
-                                .addComponent(btn_loginAdmin))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addComponent(btn_loginProp)))
-                        .addGap(0, 93, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_loginAdmin)
+                        .addGap(82, 82, 82))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(btn_loginProp)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addComponent(btn_loginProp, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(btn_loginAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(btn_loginProp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(btn_loginAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(btn_salir)
                 .addContainerGap())
         );

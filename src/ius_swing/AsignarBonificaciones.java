@@ -8,11 +8,9 @@ import dominio.usuario.Propietario;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import observer.Observable;
-import observer.Observador;
 import vistas.VistaAsignarBonificaciones;
 
-public class AsignarBonificaciones extends javax.swing.JDialog implements VistaAsignarBonificaciones, Observador {
+public class AsignarBonificaciones extends javax.swing.JDialog implements VistaAsignarBonificaciones {
     private final ControladorAsignarBonificaciones controlador;
     private final DefaultTableModel model;
     
@@ -20,6 +18,7 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
         super(parent, modal);
         setTitle("Asignar bonificaciones");
         initComponents();
+        setLocationRelativeTo(parent);
         controlador = new ControladorAsignarBonificaciones(this);
         model = new DefaultTableModel();
         tbl_bonificacion.setModel(model);
@@ -45,7 +44,9 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
+        tbl_bonificacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tbl_bonificacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -65,6 +66,7 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
                 return canEdit [columnIndex];
             }
         });
+        tbl_bonificacion.getTableHeader().setReorderingAllowed(false);
         tbl_bonificacion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tbl_bonificacionPropertyChange(evt);
@@ -76,7 +78,7 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
             tbl_bonificacion.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        cmb_bonif.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cmb_bonif.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cmb_bonif.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_bonifItemStateChanged(evt);
@@ -88,7 +90,7 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
             }
         });
 
-        cmb_puesto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cmb_puesto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cmb_puesto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_puestoItemStateChanged(evt);
@@ -100,6 +102,7 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
             }
         });
 
+        txt_cedula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         txt_cedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_cedulaActionPerformed(evt);
@@ -126,17 +129,19 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
             }
         });
 
-        lbl_bonifs.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        lbl_bonifs.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         lbl_bonifs.setText("Bonificaciones:");
 
-        lbl_puestos.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        lbl_puestos.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         lbl_puestos.setText("Puestos:");
 
-        lbl_cedula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        lbl_cedula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         lbl_cedula.setText("Cédula:");
 
-        lbl_prop.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        lbl_prop.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 16)); // NOI18N
         lbl_prop.setText(" ");
+
+        jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,12 +150,11 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
+                        .addGap(165, 165, 165)
                         .addComponent(btn_asignarBonif, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lbl_bonifs)
@@ -164,23 +168,22 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
                                         .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(btn_buscarProp))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(lbl_prop, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(lbl_prop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmb_bonif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_bonifs))
-                .addGap(18, 18, 18)
+                    .addComponent(lbl_bonifs)
+                    .addComponent(cmb_bonif, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmb_puesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_puestos))
+                    .addComponent(lbl_puestos)
+                    .addComponent(cmb_puesto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -188,17 +191,17 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
                             .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_buscarProp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addGap(15, 15, 15)
                         .addComponent(lbl_cedula)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_prop)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(49, 49, 49)
                 .addComponent(btn_asignarBonif, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -218,38 +221,14 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
     }//GEN-LAST:event_cmb_puestoActionPerformed
 
     private void btn_buscarPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarPropActionPerformed
-        if (!txt_cedula.getText().isEmpty()) {
-            Propietario prop = controlador.buscarProp(txt_cedula.getText());
-            if (prop != null) {
-                lbl_prop.setText(prop.getNombreCompleto());
-                actualizarTabla(prop);
-            }
-        } else {
-            mostrarError("Ingresar cédula");
-        }
+        controlador.buscarProp(txt_cedula.getText());
     }//GEN-LAST:event_btn_buscarPropActionPerformed
 
     private void btn_asignarBonifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asignarBonifActionPerformed
-        if (cmb_bonif.getSelectedItem() != null){
-            if (cmb_puesto.getSelectedItem() != null) {
-                if (!txt_cedula.getText().isEmpty()) {
-                    TipoBonificacion tipoBonif = controlador.buscarTipoBonifPorPos(cmb_bonif.getSelectedIndex());
-                    Puesto puesto = controlador.buscarPuestoPorPos(cmb_puesto.getSelectedIndex());
-                    Propietario prop = controlador.buscarProp(txt_cedula.getText());
-                    if (prop != null) {
-                        controlador.asignarBonificacion(prop, tipoBonif, puesto);
-                        prop.agregar(this);
-                        prop.avisar(evt);
-                    }
-                } else {
-                    mostrarError("Ingresar cédula");
-                }
-            } else {
-                mostrarError("Seleccionar puesto");
-            }
-        } else  {
-            mostrarError("Seleccionar tipo de bonificación");
-        }
+        int posBonif = cmb_bonif.getSelectedIndex();
+        int posPuesto = cmb_puesto.getSelectedIndex();
+        String cedula = txt_cedula.getText();
+        controlador.asignarBonificacion(posBonif, posPuesto, cedula);
     }//GEN-LAST:event_btn_asignarBonifActionPerformed
 
     private void txt_cedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cedulaActionPerformed
@@ -257,8 +236,14 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
 
     private void tbl_bonificacionPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbl_bonificacionPropertyChange
     }//GEN-LAST:event_tbl_bonificacionPropertyChange
-
-    private void actualizarTabla(Propietario prop) {
+    
+    @Override
+    public void setNombreProp(String prop) {
+        lbl_prop.setText(prop);
+    }
+    
+    @Override
+    public void actualizarTabla(Propietario prop) {
         model.setRowCount(0);
         for (Bonificacion b : prop.getBonificaciones()) {
             model.addRow(new Object [] {
@@ -299,12 +284,6 @@ public class AsignarBonificaciones extends javax.swing.JDialog implements VistaA
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
     }
-    
-    @Override
-    public void actualizar(Observable origen, Object evento) {
-        actualizarTabla((Propietario)origen);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_asignarBonif;
     private javax.swing.JButton btn_buscarProp;

@@ -1,12 +1,17 @@
 package dominio.usuario;
 
+import dominio.peaje.EventosSistema;
+import dominio.Fachada;
+import dominio.peaje.EventosProp;
 import dominio.peaje.Bonificacion;
 import dominio.peaje.Notificacion;
+import dominio.peaje.PeajeException;
 import dominio.peaje.Puesto;
 import dominio.peaje.Recarga;
 import dominio.peaje.Transito;
 import dominio.peaje.Vehiculo;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Propietario extends Usuario {
     private int saldo;
@@ -57,39 +62,79 @@ public class Propietario extends Usuario {
     } 
     
     public void borrarNotificaciones() {
-        this.notificaciones.clear();
-        avisar(EventosPropietario.CAMBIO_DATOS);
+        notificaciones.clear();
+        avisar(EventosProp.CAMBIO_DATOS);
     }
 
-    public int cantidadTransitos(){
-        int ret=0;
-        for(Vehiculo v:vehiculos){
-            ret+=v.getTransitos().size();
+    public void recargarSaldo(int monto) throws UsuarioException {
+        if (monto <= 0) {
+            throw new UsuarioException("Monto inválido");
         }
-        return ret;
+        Recarga recarga = new Recarga(monto, this);
+        recargas.add(recarga);
+        avisar(EventosProp.CAMBIO_DATOS); //actualizo datos propietario
+        Fachada.getInstancia().avisar(EventosSistema.CAMBIO_DATOS); //actualizo recargas pendientes
+    }
+
+    public ArrayList<Transito> transitosRealizados(){
+        ArrayList<Transito> transitos = new ArrayList();
+        for(Vehiculo v : vehiculos){
+            for (Transito t : v.getTransitos()) {
+                transitos.add(t);
+            }
+        }
+        return transitos;
     }
     
-    //duda experto
-    public ArrayList<Transito> transitosDelPropietario(){
-        ArrayList<Transito> transitos = new ArrayList<>();
-        for(Vehiculo v:vehiculos){
-            v.asignarTransitos(transitos);
+    public void recargaAprobada(int monto, Date fecha) {
+        saldo += monto;
+        Notificacion notif = new Notificacion(fecha + "Tu recarga de $" + monto + " fue aprobada");
+        notificaciones.add(notif);
+        avisar(EventosProp.CAMBIO_DATOS);
+    }
+    
+    public void tieneBonifEnPuesto(Puesto puesto) throws UsuarioException {
+        for (Bonificacion b : bonificaciones) {
+            if (puesto.equals(b.getPuesto())) {
+                throw new UsuarioException("El propietario ya tiene una bonificación en ese puesto");
+            }
         }
-        return transitos;        
+    }
+    
+    public void enviarNotifs(Notificacion notif) {
+        notificaciones.add(notif);
+    }
+    
+    public void validarSaldo(int costo) throws UsuarioException {
+        if (saldo < costo) {
+            throw new UsuarioException("El propietario no tiene saldo suficiente. Saldo actual: $" + saldo);
+        }
+    }
+    
+    public void restarSaldo(int costo) {
+        saldo = saldo - costo;
+    }
+    
+    public void agregarBonif(Bonificacion bonif) {
+        bonificaciones.add(bonif);
+    }
+    
+    public void asignarVehiculo(Vehiculo vehiculo) {
+        vehiculos.add(vehiculo);
+    }
+    
+    public ArrayList<Recarga> recargasPendientes() {
+        ArrayList<Recarga> retorno = new ArrayList();
+        for (Recarga r : recargas) {
+            if (r.getEstado().equals("Pendiente")) {
+                retorno.add(r);
+            }
+        }
+        return retorno;
     }
     
     @Override
     public boolean validarUsuario() {
-        return super.validarUsuario() &&
-               saldo > -1;
-    }
-    
-    public void recargarSaldo(int monto, Propietario prop) { //falta exception
-        if(monto>-1){
-            this.saldo+=monto;
-            Recarga r = new Recarga(monto,prop);
-            this.recargas.add(r);
-            this.avisar(EventosPropietario.CAMBIO_DATOS);
-        }
+        return super.validarUsuario() && saldo > -1;
     }
 }

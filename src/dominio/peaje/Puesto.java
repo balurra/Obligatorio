@@ -15,42 +15,20 @@ public class Puesto {
         ultId++;
         nroPuesto = ultId;
     }
-    
-    public int gastoVehiculo(CatVehiculo categoria) {
-        int ret=0;
-        for(Tarifa t:tarifas){
-            if(t.getCategoriaVehiculo().equals(categoria)){
-                ret+=t.getMonto();
-            }
-        }
-        return ret;
-    }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    
     public int getNroPuesto() {
         return nroPuesto;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public ArrayList<Tarifa> getTarifas() {
         return tarifas;
     }
     
-    public Tarifa tarifaTransito(CatVehiculo categoria) {
+    public Tarifa buscarTarifaCorrespondiente(CatVehiculo categoria) {
         Tarifa ret = null;
         for(Tarifa t:tarifas){
             if(t.getCategoriaVehiculo().equals(categoria)){
@@ -58,5 +36,9 @@ public class Puesto {
             }
         } 
         return ret;
+    }
+    
+    public void agregarTarifa(Tarifa tarifa) {
+        tarifas.add(tarifa);
     }
 }
