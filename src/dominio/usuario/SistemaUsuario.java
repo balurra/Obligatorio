@@ -30,11 +30,17 @@ public class SistemaUsuario {
     public Sesion loginAdmin(String cedula, String password) throws UsuarioException {
         Administrador admin = buscarAdmin(cedula);
         if (admin != null) {
+<<<<<<< HEAD
             if (validarListaLogueados(admin) &&
                 validarLogin(admin, cedula, password)) {
                 return login(admin);
             } else {
                 throw new UsuarioException("El administrador ya está logueado");
+=======
+            if (validarLogin(admin, cedula, password)) {
+                validarListaLogueados(admin);
+                return login(admin);
+>>>>>>> main
             }
         }
         return null;
@@ -140,12 +146,18 @@ public class SistemaUsuario {
         return !administradores.contains(admin) && admin.validarUsuario();
     }
     
+<<<<<<< HEAD
     private boolean validarListaLogueados(Usuario usuario) {
         for(Sesion s : logueados) {
             if(s.getUsuario().equals(usuario)) {
                 return false;
+=======
+    private void validarListaLogueados(Usuario usuario) throws UsuarioException {
+        for(Sesion s : logueados) {
+            if(s.getUsuario().equals(usuario)) {
+                throw new UsuarioException("El usuario ya está logueado");
+>>>>>>> main
             }
         }
-        return true;
     }
 }

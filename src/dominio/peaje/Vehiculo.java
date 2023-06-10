@@ -1,7 +1,12 @@
 package dominio.peaje;
 
 import dominio.usuario.Propietario;
+<<<<<<< HEAD
+=======
+import java.text.SimpleDateFormat;
+>>>>>>> main
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Vehiculo {
     private String matricula;
@@ -75,6 +80,23 @@ public class Vehiculo {
         transitos.add(transito);
     }
     
+<<<<<<< HEAD
+=======
+    public int cantTransitosEnFechaPorPuesto(Date fecha, Puesto puesto) {
+        int cant = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        for (Transito t : transitos) {
+            if (sdf.format(fecha).equals(sdf.format(t.getFecha()))) {
+                if (t.getPuesto().equals(puesto)) {
+                    cant++;
+                }
+            }
+        }
+        return cant;
+    }
+    
+>>>>>>> main
     @Override
     public boolean equals(Object obj) {
         Vehiculo v = (Vehiculo)obj;

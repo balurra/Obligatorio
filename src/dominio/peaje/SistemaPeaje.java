@@ -1,6 +1,10 @@
 package dominio.peaje;
 
 import dominio.usuario.Propietario;
+<<<<<<< HEAD
+=======
+import dominio.usuario.UsuarioException;
+>>>>>>> main
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +75,7 @@ public class SistemaPeaje {
         Bonificacion bonif = prop.bonifParaPuesto(puesto);
         int montoBonif = 0;
 
+<<<<<<< HEAD
         if (prop.getSaldo() < costo) {
             throw new PeajeException("El propietario no tiene saldo suficiente. Saldo actual: $" + prop.getSaldo());
         }
@@ -96,6 +101,46 @@ public class SistemaPeaje {
             prop.avisar(EventosProp.CAMBIO_DATOS);
         } else {
             throw new PeajeException("El propietario ya tiene una bonificación en ese puesto");
+=======
+        try {
+            prop.validarSaldo(costo);
+        } catch (UsuarioException e) {
+            throw new PeajeException(e.getMessage());
+        }
+        
+        return agregarTransito(puesto, vehiculo, costo, bonif, montoBonif);
+    }
+    
+    private Transito agregarTransito(Puesto p, Vehiculo v, int costo, Bonificacion b, int montoBonif) {
+        Transito transito = new Transito(p, v, costo, b, montoBonif);
+        v.agregarTransito(transito);
+        if (b != null) {
+            montoBonif = calcularDesc(costo, b, transito);
+            transito.setMontoBonif(montoBonif);
+            costo = costo - montoBonif;
+            transito.setCosto(costo);
+        }
+        Propietario prop = v.getProp();
+        Date fecha = transito.getFecha();
+        accionesEnPropietario(prop, costo, fecha, p, v);
+        return transito;
+    }
+    
+    private void accionesEnPropietario(Propietario prop, int costo, Date fecha, Puesto p, Vehiculo v) {
+        prop.restarSaldo(costo);
+        enviarNotifs(fecha, p, v);
+        prop.avisar(EventosProp.CAMBIO_DATOS);
+    }
+    
+    public void asignarBonificacion(Propietario prop, TipoBonificacion tipoBonif, Puesto puesto) throws PeajeException {
+        try {
+            prop.tieneBonifEnPuesto(puesto);
+            Bonificacion bonif = new Bonificacion(tipoBonif, puesto);
+            prop.agregarBonif(bonif);
+            prop.avisar(EventosProp.CAMBIO_DATOS);
+        } catch (UsuarioException e) {
+            throw new PeajeException(e.getMessage());
+>>>>>>> main
         }
     }
     
@@ -104,6 +149,7 @@ public class SistemaPeaje {
         double decimal = porcentaje/100.0;
         return (int)(costo * decimal);
     }
+<<<<<<< HEAD
     
     private Transito agregarTransito(Puesto p, Vehiculo v, int costo, Bonificacion bon, int montoBonif){
         Transito transito = new Transito(p, v, costo, bon, montoBonif);
@@ -113,6 +159,9 @@ public class SistemaPeaje {
         return transito;
     }
     
+=======
+  
+>>>>>>> main
     private void enviarNotifs(Date fecha, Puesto p, Vehiculo v) {
         Notificacion notif = new Notificacion(fecha + " Pasaste por el puesto " +
                                               p.getNroPuesto() + " con el vehículo " + 

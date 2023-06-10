@@ -48,7 +48,11 @@ public class ControladorAsignarBonificaciones implements Observador {
         Propietario prop = buscarProp(cedula);
         if (prop != null) {
             if (posBonif == -1) {
+<<<<<<< HEAD
             vista.mostrarError("Seleccionar tipo de bonificación");
+=======
+                vista.mostrarError("Seleccionar tipo de bonificación");
+>>>>>>> main
             } else if (posPuesto == -1) {
                 vista.mostrarError("Seleccionar puesto");
             } else {
