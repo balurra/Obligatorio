@@ -1,5 +1,5 @@
 package dominio.peaje;
 
 public enum EventosSistema {
-    CAMBIO_DATOS  
+    CAMBIO_DATOS
 }

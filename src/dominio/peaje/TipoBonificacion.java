@@ -1,7 +1,5 @@
 package dominio.peaje;
 
-import java.util.Date;
-
 public abstract class TipoBonificacion {
     
     private String nombre;

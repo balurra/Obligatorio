@@ -70,21 +70,22 @@ public class SistemaPeaje {
         Propietario prop = vehiculo.getProp();
         Bonificacion bonif = prop.bonifParaPuesto(puesto);
         int montoBonif = 0;
-        Transito transito = null;
-        
-        if (prop.getSaldo() >= costo) {
-            transito = agregarTransito(puesto, vehiculo, costo, bonif, montoBonif);
-            if (bonif != null) {
-                montoBonif = calcularDesc(costo, bonif, transito);
-                transito.setMontoBonif(montoBonif);
-                transito.setCosto(costo - montoBonif);
-            }
-            enviarNotifs(transito.getFecha(), puesto, vehiculo);
-            vehiculo.getProp().avisar(EventosProp.CAMBIO_DATOS);
-        } else {
+
+        if (prop.getSaldo() < costo) {
             throw new PeajeException("El propietario no tiene saldo suficiente. Saldo actual: $" + prop.getSaldo());
         }
-        
+
+        Transito transito = agregarTransito(puesto, vehiculo, costo, bonif, montoBonif);
+
+        if (bonif != null) {
+            montoBonif = calcularDesc(costo, bonif, transito);
+            transito.setMontoBonif(montoBonif);
+            transito.setCosto(costo - montoBonif);
+        }
+
+        enviarNotifs(transito.getFecha(), puesto, vehiculo);
+        vehiculo.getProp().avisar(EventosProp.CAMBIO_DATOS);
+
         return transito;
     }
     

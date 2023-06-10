@@ -5,7 +5,6 @@ import dominio.peaje.EventosSistema;
 import dominio.peaje.Recarga;
 import java.util.ArrayList;
 import java.util.List;
-import observer.Observador;
 
 public class SistemaUsuario {
     private final List<Propietario> propietarios = new ArrayList<>();
@@ -19,40 +18,26 @@ public class SistemaUsuario {
     public List<Propietario> getPropietarios() {
         return propietarios;
     }
-
-    public Sesion loginProp(String cedula, String password) {
-        Propietario propietario = null;
-        Sesion sesion = null;
-        
-        for (Propietario prop : propietarios) {
-            if (cedula.equals(prop.getCedula())) {
-                propietario = prop;
-            }
-        }
-        if (propietario != null) {
-            sesion = login(cedula, password, propietario);
-        }
-        return sesion;
-    }
     
-    public Sesion loginAdmin(String cedula, String password) throws UsuarioException {
-        Administrador administrador = null;
-        Sesion sesion = null;
-        
-        for (Administrador admin : administradores) {
-            if (cedula.equals(admin.getCedula())) {
-                administrador = admin;
-            }
+    public Sesion loginProp(String cedula, String password) {
+        Propietario prop = buscarProp(cedula);
+        if (prop != null && validarLogin(prop, cedula, password)) {
+            return login(prop);
         }
-        if (administrador != null) {
-            if (validarListaLogueados(administrador)) {
-                sesion = login(cedula, password, administrador);
+        return null;
+    }
+
+    public Sesion loginAdmin(String cedula, String password) throws UsuarioException {
+        Administrador admin = buscarAdmin(cedula);
+        if (admin != null) {
+            if (validarListaLogueados(admin) &&
+                validarLogin(admin, cedula, password)) {
+                return login(admin);
             } else {
                 throw new UsuarioException("El administrador ya está logueado");
             }
         }
-        
-        return sesion;
+        return null;
     }
     
     public void aprobarRecarga(int idRecarga, Administrador admin) {
@@ -76,7 +61,7 @@ public class SistemaUsuario {
         }
     }
     
-     public Propietario buscarProp(String cedula) {
+    public Propietario buscarProp(String cedula) {
         Propietario retorno = null;
         
         for (Propietario prop : propietarios) {
@@ -89,20 +74,9 @@ public class SistemaUsuario {
     }
      
     public void cerrarSesion(Usuario usuario) {
-        Sesion sesion = null;
-        for (Sesion s : logueados) {
-            if (usuario.equals(s.getUsuario())) {
-                sesion = s;
-            }
-        }
+        Sesion sesion = buscarSesion(usuario);
         if (sesion != null) {
             logueados.remove(sesion);
-        }
-    }
-    
-    public void agregarObservador(Observador obs) {
-        for (Propietario p : propietarios) {
-            p.agregar(obs);
         }
     }
     
@@ -126,14 +100,31 @@ public class SistemaUsuario {
         return recargas;
     }
     
-    private Sesion login(String cedula, String password, Usuario usuario) {
-        if (usuario != null &&
-            validarLogin(usuario, cedula, password)) {
-            Sesion sesion = new Sesion(usuario);
-            logueados.add(sesion);
-            return sesion;
+    private Sesion buscarSesion(Usuario usuario) {
+        for (Sesion s : logueados) {
+            if (usuario.equals(s.getUsuario())) {
+                return s;
+            }
         }
         return null;
+    }
+    
+    private Administrador buscarAdmin(String cedula) {
+        Administrador retorno = null;
+        
+        for (Administrador admin : administradores) {
+            if (cedula.equals(admin.getCedula())) {
+                retorno = admin;
+            }
+        }
+
+        return retorno;
+    }
+    
+    private Sesion login(Usuario usuario) {
+        Sesion sesion = new Sesion(usuario);
+        logueados.add(sesion);
+        return sesion;
     }
     
     private static boolean validarLogin(Usuario usuario, String cedula, String password) {
