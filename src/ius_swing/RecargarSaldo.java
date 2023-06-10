@@ -110,10 +110,6 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
     private void txt_montoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_montoActionPerformed
-<<<<<<< HEAD
-        // TODO add your handling code here:
-=======
->>>>>>> main
     }//GEN-LAST:event_txt_montoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

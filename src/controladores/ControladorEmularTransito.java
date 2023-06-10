@@ -39,31 +39,13 @@ public class ControladorEmularTransito  {
             if (vehiculo != null) {
                 try {
                     Transito t = fachada.emularTransito(puesto, vehiculo);
-<<<<<<< HEAD
-                    String bonif = "Sin bonificación";
-                    String nombreProp = t.getVehiculo().getProp().getNombreCompleto();
-                    String catVehiculo = t.getVehiculo().getCategoria().getNombre();
-                    int costo = t.getCosto();
-                    int saldoPropRestante = t.getVehiculo().getProp().getSaldo();
-                    if (t.getBonif() != null) {
-                        bonif = t.getBonif().getTipoBonificacion().getNombre();
-                    }
-
-                    String mensaje = nombreProp + " - " + catVehiculo +
-                                     " - " + bonif + " - Total: " + costo +
-                                     " - Saldo disponible: " + saldoPropRestante;
-                    vista.mostrarExito(mensaje);
-=======
                     mostrarMensaje(t);
->>>>>>> main
                 } catch(PeajeException e) {
                     vista.mostrarError(e.getMessage());
                 }
             }
         }
     }
-<<<<<<< HEAD
-=======
     
     private void mostrarMensaje(Transito t) {
         String bonif = "Sin bonificación";
@@ -81,5 +63,4 @@ public class ControladorEmularTransito  {
         
         vista.mostrarExito(mensaje);
     }
->>>>>>> main
 }

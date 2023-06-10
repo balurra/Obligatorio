@@ -5,10 +5,7 @@ import dominio.Fachada;
 import dominio.peaje.EventosProp;
 import dominio.peaje.Bonificacion;
 import dominio.peaje.Notificacion;
-<<<<<<< HEAD
-=======
 import dominio.peaje.PeajeException;
->>>>>>> main
 import dominio.peaje.Puesto;
 import dominio.peaje.Recarga;
 import dominio.peaje.Transito;
@@ -70,16 +67,6 @@ public class Propietario extends Usuario {
     }
 
     public void recargarSaldo(int monto) throws UsuarioException {
-<<<<<<< HEAD
-        if(monto > 0) {
-            Recarga recarga = new Recarga(monto, this);
-            recargas.add(recarga);
-            avisar(EventosProp.CAMBIO_DATOS); //actualizo datos propietario
-            Fachada.getInstancia().avisar(EventosSistema.CAMBIO_DATOS); //actualizo recargas pendientes
-        } else  {
-            throw new UsuarioException("Monto inválido");
-        }
-=======
         if (monto <= 0) {
             throw new UsuarioException("Monto inválido");
         }
@@ -87,7 +74,6 @@ public class Propietario extends Usuario {
         recargas.add(recarga);
         avisar(EventosProp.CAMBIO_DATOS); //actualizo datos propietario
         Fachada.getInstancia().avisar(EventosSistema.CAMBIO_DATOS); //actualizo recargas pendientes
->>>>>>> main
     }
 
     public ArrayList<Transito> transitosRealizados(){
@@ -107,38 +93,24 @@ public class Propietario extends Usuario {
         avisar(EventosProp.CAMBIO_DATOS);
     }
     
-<<<<<<< HEAD
-    public boolean tieneBonifEnPuesto(Puesto puesto) {
-        boolean exito = false;
-        for (Bonificacion b : bonificaciones) {
-            if (puesto.equals(b.getPuesto())) {
-                exito = true;
-            }
-        }
-        return exito;
-=======
     public void tieneBonifEnPuesto(Puesto puesto) throws UsuarioException {
         for (Bonificacion b : bonificaciones) {
             if (puesto.equals(b.getPuesto())) {
                 throw new UsuarioException("El propietario ya tiene una bonificación en ese puesto");
             }
         }
->>>>>>> main
     }
     
     public void enviarNotifs(Notificacion notif) {
         notificaciones.add(notif);
     }
     
-<<<<<<< HEAD
-=======
     public void validarSaldo(int costo) throws UsuarioException {
         if (saldo < costo) {
             throw new UsuarioException("El propietario no tiene saldo suficiente. Saldo actual: $" + saldo);
         }
     }
     
->>>>>>> main
     public void restarSaldo(int costo) {
         saldo = saldo - costo;
     }

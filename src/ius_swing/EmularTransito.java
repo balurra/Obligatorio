@@ -192,10 +192,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
     private javax.swing.JTable tbl_tarifas;
     private javax.swing.JTextField txt_matricula;
     // End of variables declaration//GEN-END:variables
-<<<<<<< HEAD
-=======
    
->>>>>>> main
     private void cargarTarifas(int puestoPos) {
         Puesto puesto = controlador.buscarPuestoPorPos(puestoPos);
         model.setRowCount(0);
