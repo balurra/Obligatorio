@@ -1,5 +1,7 @@
 package dominio.peaje;
 
+import java.util.Date;
+
 public abstract class TipoBonificacion {
     
     private String nombre;
@@ -17,4 +19,6 @@ public abstract class TipoBonificacion {
     public int getPorcentaje() {
         return porcentaje;
     }
+    
+    public abstract int retornarDesc(Transito transito);
 }

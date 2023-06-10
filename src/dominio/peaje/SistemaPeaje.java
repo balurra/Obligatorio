@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 public class SistemaPeaje {
-    private ArrayList<Puesto> puestos = new ArrayList<>();
-    private ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-    private ArrayList<TipoBonificacion> tiposBonif = new ArrayList<>();
-    private int alertaSaldoMinimo = 100;
+    private final ArrayList<Puesto> puestos = new ArrayList<>();
+    private final ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+    private final ArrayList<TipoBonificacion> tiposBonif = new ArrayList<>();
+    private final int alertaSaldoMinimo = 500;
     
     public List<TipoBonificacion> getTiposBonif() {
         return tiposBonif;
@@ -32,13 +32,11 @@ public class SistemaPeaje {
         return retorno;
     }
 
-    public Vehiculo agregarVehiculo(Vehiculo vehiculo) {
-        Vehiculo retorno = null;
+    public void agregarVehiculo(Vehiculo vehiculo) {
         if (validarListaVehiculos(vehiculo)) {
             vehiculos.add(vehiculo);
-            retorno = vehiculo;
+            vehiculo.getProp().asignarVehiculo(vehiculo);
         }
-        return retorno;
     }
     
     public Vehiculo buscarVehiculo(String matricula) {
@@ -67,50 +65,50 @@ public class SistemaPeaje {
     
     public Transito emularTransito(Puesto puesto, Vehiculo vehiculo) throws PeajeException {
         CatVehiculo catVehiculo = vehiculo.getCategoria();
-        Tarifa tarifa = buscarTarifaCorrespondiente(puesto, catVehiculo);
-        Propietario prop = vehiculo.getProp();
+        Tarifa tarifa = puesto.buscarTarifaCorrespondiente(catVehiculo);
         int costo = tarifa.getMonto();
-        Transito transito = null;
+        Propietario prop = vehiculo.getProp();
         Bonificacion bonif = prop.bonifParaPuesto(puesto);
         int montoBonif = 0;
-        
-        if (bonif != null) {
-            Date fechaActual = new Date();
-            montoBonif = calcularDesc(costo, bonif, vehiculo, fechaActual);
-            costo = costo - montoBonif;
-        }
+        Transito transito = null;
         
         if (prop.getSaldo() >= costo) {
             transito = agregarTransito(puesto, vehiculo, costo, bonif, montoBonif);
+            if (bonif != null) {
+                montoBonif = calcularDesc(costo, bonif, transito);
+                transito.setMontoBonif(montoBonif);
+                transito.setCosto(costo - montoBonif);
+            }
             enviarNotifs(transito.getFecha(), puesto, vehiculo);
             vehiculo.getProp().avisar(EventosProp.CAMBIO_DATOS);
         } else {
-            throw new PeajeException("Saldo insuficiente");
+            throw new PeajeException("El propietario no tiene saldo suficiente. Saldo actual: $" + prop.getSaldo());
         }
         
         return transito;
     }
     
     public void asignarBonificacion(Propietario prop, TipoBonificacion tipoBonif, Puesto puesto) throws PeajeException {
-        if (!tieneBonifEnPuesto(prop, puesto)) {
+        if (!prop.tieneBonifEnPuesto(puesto)) {
             Bonificacion bonif = new Bonificacion(tipoBonif, puesto);
-            prop.getBonificaciones().add(bonif);
+            prop.agregarBonif(bonif);
             prop.avisar(EventosProp.CAMBIO_DATOS);
         } else {
             throw new PeajeException("El propietario ya tiene una bonificación en ese puesto");
         }
     }
     
-    private int calcularDesc(int costo, Bonificacion bon, Vehiculo v, Date fecha) {
-        return costo * (bon.calcularPorcentajeDesc(v, fecha)/100);
+    private int calcularDesc(int costo, Bonificacion bon, Transito t) {
+        int porcentaje = bon.calcularPorcentajeDesc(t);
+        double decimal = porcentaje/100.0;
+        return (int)(costo * decimal);
     }
     
     private Transito agregarTransito(Puesto p, Vehiculo v, int costo, Bonificacion bon, int montoBonif){
         Transito transito = new Transito(p, v, costo, bon, montoBonif);
         Propietario prop = v.getProp();
-        v.getTransitos().add(transito);
-        int saldoProp = prop.getSaldo();
-        prop.setSaldo(saldoProp - costo);
+        v.agregarTransito(transito);
+        prop.restarSaldo(costo);
         return transito;
     }
     
@@ -119,43 +117,26 @@ public class SistemaPeaje {
                                               p.getNroPuesto() + " con el vehículo " + 
                                               v.getMatricula());
         Propietario prop = v.getProp();
-        prop.getNotificaciones().add(notif);
+        prop.enviarNotifs(notif);
         if (prop.getSaldo() < alertaSaldoMinimo) {
             Notificacion notifSaldo = new Notificacion("Tu saldo actual es de $" + prop.getSaldo()
-                                                       + ". Te recomendamos hacer una recarga");
-            prop.getNotificaciones().add(notifSaldo);
+                                                       + ". Te recomendamos hacer una recarga.");
+            prop.enviarNotifs(notifSaldo);
         }
     }
     
-    private Tarifa buscarTarifaCorrespondiente(Puesto puesto, CatVehiculo cat) {
-        Tarifa tarifa = null;
-        
-        for (Tarifa t : puesto.getTarifas()) {
-            if (cat.equals(t.getCategoriaVehiculo())) {
-                tarifa = t;
-            }
-        }
-        
-        return tarifa;
-    }
-    
-    private boolean tieneBonifEnPuesto(Propietario prop, Puesto puesto) {
-        boolean exito = false;
-        ArrayList<Bonificacion> bonifsProp = prop.getBonificaciones();
-        for (Bonificacion b : bonifsProp) {
-            if (puesto.equals(b.getPuesto())) {
-                exito = true;
-            }
-        }
-        return exito;
-    }
-
     private boolean validarListaTiposBonif(TipoBonificacion tipo) {
         return !tiposBonif.contains(tipo);
     }
 
     private boolean validarListaVehiculos(Vehiculo vehiculo) {
-        return !vehiculos.contains(vehiculo);
+        boolean exito = true;
+        for (Vehiculo v : vehiculos) {
+            if (v.equals(vehiculo)) {
+                exito = false;
+            }
+        }
+        return exito;
     }
     
     private boolean validarListaPuestos(Puesto puesto) {

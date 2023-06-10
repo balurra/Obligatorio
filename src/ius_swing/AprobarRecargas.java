@@ -15,8 +15,10 @@ public class AprobarRecargas extends javax.swing.JDialog implements VistaAprobar
     public AprobarRecargas(java.awt.Frame parent, boolean modal, Administrador admin) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
         model = new DefaultTableModel();
         tbl_recargas.setModel(model);
+        model.addColumn("Id");
         model.addColumn("Fecha");
         model.addColumn("Propietario");
         model.addColumn("Monto");
@@ -65,7 +67,9 @@ public class AprobarRecargas extends javax.swing.JDialog implements VistaAprobar
         btn_aprobar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
+        tbl_recargas.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         tbl_recargas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -145,7 +149,11 @@ public class AprobarRecargas extends javax.swing.JDialog implements VistaAprobar
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_aprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aprobarActionPerformed
-        int idRecarga = (int)tbl_recargas.getValueAt(tbl_recargas.getSelectedRow(),0);
+        int idRecarga = -1;
+        if (tbl_recargas.getRowCount() != 0 &&
+            tbl_recargas.getSelectedRow() != -1) {
+            idRecarga = (int)tbl_recargas.getValueAt(tbl_recargas.getSelectedRow(),0);
+        }
         controlador.aprobarRecarga(idRecarga);
     }//GEN-LAST:event_btn_aprobarActionPerformed
 

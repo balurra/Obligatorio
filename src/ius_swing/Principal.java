@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
-        setLocationRelativeTo(this);
+        setLocationRelativeTo(null);
         setTitle("Ingresar");
     }
 
@@ -20,6 +20,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btn_salir.setBackground(new java.awt.Color(227, 69, 65));
         btn_salir.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
@@ -42,7 +43,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_loginProp.setBackground(new java.awt.Color(0, 153, 153));
-        btn_loginProp.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
+        btn_loginProp.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
         btn_loginProp.setForeground(new java.awt.Color(255, 255, 255));
         btn_loginProp.setText("Soy propietario");
         btn_loginProp.addActionListener(new java.awt.event.ActionListener() {

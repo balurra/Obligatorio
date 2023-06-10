@@ -20,12 +20,14 @@ public class ControladorRecargarSaldo implements Observador {
 
     public void recargarSaldo(String monto) {
         try {
-            if (monto.chars().allMatch(Character::isDigit)) {
+            if (monto.isEmpty()) {
+                vista.mostrarError("Ingresar monto");
+            } else if (!monto.matches("^-?\\d*\\.{0,1}\\d+$")) {
+                vista.mostrarError("Ingresar números");
+            } else {
                 int montoInt = Integer.parseInt(monto);
                 prop.recargarSaldo(montoInt);
                 vista.mostrarExito("Se agregó la recarga a la lista de pendientes de aprobación");
-            } else  {
-                vista.mostrarError("Ingresar números");
             }
         } catch(UsuarioException e) {
             vista.mostrarError(e.getMessage());

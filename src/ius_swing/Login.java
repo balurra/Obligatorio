@@ -28,11 +28,12 @@ public abstract class Login extends javax.swing.JDialog implements VistaLogin {
         pwd_password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lbl_cedula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
         lbl_cedula.setText("Cédula:");
 
-        txt_cedula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
+        txt_cedula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         txt_cedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_cedulaActionPerformed(evt);
@@ -52,7 +53,7 @@ public abstract class Login extends javax.swing.JDialog implements VistaLogin {
             }
         });
 
-        pwd_password.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
+        pwd_password.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

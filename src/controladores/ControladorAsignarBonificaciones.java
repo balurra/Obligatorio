@@ -28,35 +28,32 @@ public class ControladorAsignarBonificaciones implements Observador {
     }
 
     public Propietario buscarProp(String cedula) {
+        Propietario prop = null;
         if (!cedula.isEmpty()) {
-            Propietario prop = fachada.buscarProp(cedula);
+            prop = fachada.buscarProp(cedula);
             if (prop != null) {
-                vista.actualizarTabla(prop);
                 prop.agregar(this);
-                return prop;
+                vista.setNombreProp(prop.getNombreCompleto());
+                vista.actualizarTabla(prop);
             } else {
                 vista.mostrarError("No existe el propietario");
             }
         } else {
             vista.mostrarError("Ingresar cédula");
         }
-        return null;
+        return prop;
     }
 
     public void asignarBonificacion(int posBonif, int posPuesto, String cedula) {
-        if (posBonif == -1) {
+        Propietario prop = buscarProp(cedula);
+        if (prop != null) {
+            if (posBonif == -1) {
             vista.mostrarError("Seleccionar tipo de bonificación");
-        } else if (posPuesto == -1) {
-            vista.mostrarError("Seleccionar puesto");
-        } else if (cedula.isEmpty()) {
-            vista.mostrarError("Ingresar cédula");
-        } else {
-            TipoBonificacion tipoBonif = buscarTipoBonifPorPos(posBonif);
-            Puesto puesto = buscarPuestoPorPos(posPuesto);
-            Propietario prop = buscarProp(cedula);
-            if (prop == null) {
-                vista.mostrarError("No existe el propietario");
-            } else  {
+            } else if (posPuesto == -1) {
+                vista.mostrarError("Seleccionar puesto");
+            } else {
+                TipoBonificacion tipoBonif = buscarTipoBonifPorPos(posBonif);
+                Puesto puesto = buscarPuestoPorPos(posPuesto);
                 try {
                     fachada.asignarBonificacion(prop, tipoBonif, puesto);
                     vista.mostrarExito("Bonificación asignada");

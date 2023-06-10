@@ -5,6 +5,10 @@ import dominio.usuario.Propietario;
 import observer.Observable;
 import observer.Observador;
 import dominio.peaje.EventosProp;
+import dominio.peaje.Notificacion;
+import dominio.peaje.Recarga;
+import dominio.peaje.Transito;
+import java.util.ArrayList;
 import vistas.VistaTableroProp;
 
 public class ControladorTableroProp implements Observador{
@@ -41,15 +45,21 @@ public class ControladorTableroProp implements Observador{
     }
     
     private void datosTransitos() {
-        vista.datosTransitos(prop.transitosRealizados());
+        ArrayList<Transito> transitos = prop.transitosRealizados();
+        transitos.sort((obj1, obj2) -> obj2.getFecha().compareTo(obj1.getFecha()));
+        vista.datosTransitos(transitos);
     }
     
     private void datosRecargas() {
-        vista.datosRecargas(prop.getRecargas());
+        ArrayList<Recarga> recargas = prop.getRecargas();
+        recargas.sort((obj1, obj2) -> obj2.getFechaIniciada().compareTo(obj1.getFechaIniciada()));
+        vista.datosRecargas(recargas);
     }
     
     private void datosNotifs() {
-        vista.datosNotifs(prop.getNotificaciones());
+        ArrayList<Notificacion> notifs = prop.getNotificaciones();
+        notifs.sort((obj1, obj2) -> obj2.getFecha().compareTo(obj1.getFecha()));
+        vista.datosNotifs(notifs);
     }
 
     public void borrarNotificaciones() {

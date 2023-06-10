@@ -18,6 +18,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
         setTitle("Emular tránsito");
         model = new DefaultTableModel();
         initComponents();
+        setLocationRelativeTo(parent);
         controlador = new ControladorEmularTransito(this);
         seInicializo = true;
         tbl_tarifas.setModel(model);
@@ -40,24 +41,26 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
         tbl_tarifas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
+        txt_matricula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         txt_matricula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_matriculaActionPerformed(evt);
             }
         });
 
-        lbl_puesto.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        lbl_puesto.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         lbl_puesto.setText("Puesto:");
 
-        lbl_tarifas.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        lbl_tarifas.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         lbl_tarifas.setText("Tarifas:");
 
-        lbl_matricula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        lbl_matricula.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         lbl_matricula.setText("Ingresar matrícula:");
 
         btn_registrar.setBackground(new java.awt.Color(0, 153, 153));
-        btn_registrar.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
+        btn_registrar.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
         btn_registrar.setForeground(new java.awt.Color(255, 255, 255));
         btn_registrar.setText("Registrar");
         btn_registrar.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +69,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
             }
         });
 
-        cmb_puesto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cmb_puesto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cmb_puesto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_puestoItemStateChanged(evt);
@@ -78,6 +81,7 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
             }
         });
 
+        tbl_tarifas.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 14)); // NOI18N
         tbl_tarifas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -116,48 +120,45 @@ public class EmularTransito extends javax.swing.JDialog implements VistaEmularTr
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_matricula)
-                                .addGap(18, 18, 18)
-                                .addComponent(txt_matricula, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lbl_puesto)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbl_tarifas)
-                                        .addGap(20, 20, 20)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmb_puesto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)))))
+                                .addComponent(lbl_puesto)
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbl_tarifas)
+                                .addGap(20, 20, 20)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmb_puesto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addComponent(btn_registrar)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(lbl_matricula)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_matricula, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmb_puesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_puesto))
-                .addGap(37, 37, 37)
+                    .addComponent(lbl_puesto)
+                    .addComponent(cmb_puesto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_tarifas)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_matricula, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_matricula))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
 
         pack();

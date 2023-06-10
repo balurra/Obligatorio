@@ -30,6 +30,14 @@ public class Transito {
         return costo;
     }
 
+    public void setCosto(int costo) {
+        this.costo = costo;
+    }
+
+    public void setMontoBonif(int montoBonif) {
+        this.montoBonif = montoBonif;
+    }
+
     public Bonificacion getBonif() {
         return bonif;
     }
@@ -43,6 +51,6 @@ public class Transito {
     }
 
     public Tarifa tarifaTransito(){
-        return this.puesto.tarifaTransito(this.vehiculo.getCategoria());
+        return puesto.buscarTarifaCorrespondiente(vehiculo.getCategoria());
     }
 }

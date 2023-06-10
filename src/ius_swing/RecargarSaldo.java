@@ -11,6 +11,7 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
     public RecargarSaldo(java.awt.Frame parent, boolean modal, Propietario prop) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
         controlador = new ControladorRecargarSaldo(this, prop);
         setTitle("Recarga de saldo");
     }
@@ -22,8 +23,9 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
         lbl_saldo = new javax.swing.JLabel();
         lbl_nombre_propietario = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        tf_monto = new javax.swing.JTextField();
+        txt_monto = new javax.swing.JTextField();
         btn_aceptar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -39,9 +41,10 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 18)); // NOI18N
         jLabel1.setText("Monto a recargar:");
 
-        tf_monto.addActionListener(new java.awt.event.ActionListener() {
+        txt_monto.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
+        txt_monto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_montoActionPerformed(evt);
+                txt_montoActionPerformed(evt);
             }
         });
 
@@ -61,6 +64,7 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -72,11 +76,11 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
                         .addGap(36, 36, 36)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addGap(167, 167, 167)
                 .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -87,32 +91,35 @@ public class RecargarSaldo extends javax.swing.JDialog implements VistaRecargarS
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nombre_propietario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_saldo))
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(tf_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                    .addComponent(txt_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tf_montoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_montoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_montoActionPerformed
-
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
-        controlador.recargarSaldo(tf_monto.getText());
+        controlador.recargarSaldo(txt_monto.getText());
     }//GEN-LAST:event_btn_aceptarActionPerformed
+
+    private void txt_montoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_montoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_montoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_nombre_propietario;
     private javax.swing.JLabel lbl_saldo;
-    private javax.swing.JTextField tf_monto;
+    private javax.swing.JTextField txt_monto;
     // End of variables declaration//GEN-END:variables
 
     @Override

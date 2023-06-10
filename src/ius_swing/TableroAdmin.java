@@ -11,10 +11,12 @@ public class TableroAdmin extends javax.swing.JFrame implements VistaTableroAdmi
     
     public TableroAdmin(Administrador admin) {
         initComponents();
+        setLocationRelativeTo(null);
         this.admin = admin;
         controlador = new ControladorTableroAdmin(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setTitle("¡Bienvenid@ " + admin.getNombreCompleto() + "!");
+        setTitle("Tablero del administrador");
+        lbl_nombreAdmin.setText(admin.getNombreCompleto());
     }
 
     @SuppressWarnings("unchecked")
@@ -25,8 +27,11 @@ public class TableroAdmin extends javax.swing.JFrame implements VistaTableroAdmi
         btn_asignarBonifs = new javax.swing.JButton();
         btn_aprobarRecargas = new javax.swing.JButton();
         btn_cerrarSesion = new javax.swing.JButton();
+        lbl_nombreAdmin = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -76,39 +81,52 @@ public class TableroAdmin extends javax.swing.JFrame implements VistaTableroAdmi
             }
         });
 
+        lbl_nombreAdmin.setFont(new java.awt.Font("Yu Gothic UI Semilight", 0, 16)); // NOI18N
+        lbl_nombreAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/usuario.png"))); // NOI18N
+        lbl_nombreAdmin.setText("*nombre*");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(101, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_cerrarSesion)
-                        .addGap(16, 16, 16))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbl_nombreAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(btn_cerrarSesion))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(btn_aprobarRecargas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btn_asignarBonifs)
+                                .addGap(127, 127, 127)
+                                .addComponent(btn_emularTransito))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(btn_emularTransito)))
-                        .addGap(99, 99, 99))))
+                                .addGap(98, 98, 98)
+                                .addComponent(btn_asignarBonifs))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(108, 108, 108)
+                                .addComponent(btn_aprobarRecargas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_nombreAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_emularTransito, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(28, 28, 28)
                 .addComponent(btn_aprobarRecargas, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(28, 28, 28)
                 .addComponent(btn_asignarBonifs, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(btn_cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,5 +173,7 @@ public class TableroAdmin extends javax.swing.JFrame implements VistaTableroAdmi
     private javax.swing.JButton btn_asignarBonifs;
     private javax.swing.JButton btn_cerrarSesion;
     private javax.swing.JButton btn_emularTransito;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbl_nombreAdmin;
     // End of variables declaration//GEN-END:variables
 }

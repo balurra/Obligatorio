@@ -2,9 +2,8 @@ package dominio.peaje;
 
 import dominio.usuario.Propietario;
 import java.util.ArrayList;
-import observer.Observable;
 
-public class Vehiculo extends Observable {
+public class Vehiculo {
     private String matricula;
     private String modelo;
     private String color;
@@ -35,8 +34,6 @@ public class Vehiculo extends Observable {
     public void setProp(Propietario prop) {
         this.prop = prop;
     }
-    
-    
 
     public ArrayList<Transito> getTransitos() {
         return transitos;
@@ -74,9 +71,13 @@ public class Vehiculo extends Observable {
         return total;
     }
 
-    public void asignarTransitos(ArrayList<Transito> transitos) {
-        for(Transito t:this.transitos){
-            transitos.add(t);
-        }    
+    public void agregarTransito(Transito transito) {
+        transitos.add(transito);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        Vehiculo v = (Vehiculo)obj;
+        return matricula.equals(v.matricula);
     }
 }

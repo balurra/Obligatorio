@@ -1,5 +1,7 @@
 package dominio.usuario;
 
+import dominio.Fachada;
+import dominio.peaje.EventosSistema;
 import dominio.peaje.Recarga;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +58,7 @@ public class SistemaUsuario {
     public void aprobarRecarga(int idRecarga, Administrador admin) {
         Recarga recarga = buscarRecarga(idRecarga);
         recarga.aprobar(admin);
-    }
-    
-    public void agregarObservador(Observador obs) {
-        for (Propietario p : propietarios) {
-            p.agregar(obs);
-        }
+        Fachada.getInstancia().avisar(EventosSistema.CAMBIO_DATOS);
     }
     
     public Propietario registrarProp(Propietario prop) {
@@ -103,6 +100,12 @@ public class SistemaUsuario {
         }
     }
     
+    public void agregarObservador(Observador obs) {
+        for (Propietario p : propietarios) {
+            p.agregar(obs);
+        }
+    }
+    
     public Recarga buscarRecarga(int id) {
         Recarga recarga = null;
         for (Recarga r : recargasPendientes()) {
@@ -116,10 +119,8 @@ public class SistemaUsuario {
     public ArrayList<Recarga> recargasPendientes(){
         ArrayList<Recarga> recargas = new ArrayList();
         for (Propietario p : propietarios) {
-            for (Recarga r : p.getRecargas()) {
-                if (r.getEstado().equals("Pendiente")) {
-                    recargas.add(r);
-                }
+            for (Recarga r : p.recargasPendientes()) {
+                recargas.add(r);
             }
         }
         return recargas;

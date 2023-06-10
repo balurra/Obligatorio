@@ -15,7 +15,6 @@ import dominio.usuario.Usuario;
 import dominio.usuario.UsuarioException;
 import java.util.List;
 import observer.Observable;
-import observer.Observador;
 
 public class Fachada extends Observable {
     private static Fachada instancia = new Fachada();
@@ -62,8 +61,8 @@ public class Fachada extends Observable {
         return sistemaPeaje.agregarPuesto(puesto);
     }
 
-    public Vehiculo agregarVehiculo(Vehiculo vehiculo) {
-        return sistemaPeaje.agregarVehiculo(vehiculo);
+    public void agregarVehiculo(Vehiculo vehiculo) {
+        sistemaPeaje.agregarVehiculo(vehiculo);
     }
 
     public void agregarTipoBonif(TipoBonificacion tipo) {
@@ -104,10 +103,6 @@ public class Fachada extends Observable {
 
     public void aprobarRecarga(int idRecarga, Administrador admin) {
         sistemaUsuario.aprobarRecarga(idRecarga, admin);
-    }
-
-    public void agregarObservador(Observador obs) {
-        sistemaUsuario.agregarObservador(obs);
     }
 
     public List<Recarga> getRecargasPendientes() {

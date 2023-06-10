@@ -11,4 +11,5 @@ public interface VistaAsignarBonificaciones {
     public void actualizarTabla(Propietario prop);
     public void cargarPuestos(List<Puesto> puestos);
     public void cargarBonifs(List<TipoBonificacion> bonifs);
+    public void setNombreProp(String prop);
 }

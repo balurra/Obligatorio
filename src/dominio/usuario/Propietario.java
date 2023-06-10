@@ -1,5 +1,7 @@
 package dominio.usuario;
 
+import dominio.peaje.EventosSistema;
+import dominio.Fachada;
 import dominio.peaje.EventosProp;
 import dominio.peaje.Bonificacion;
 import dominio.peaje.Notificacion;
@@ -67,7 +69,8 @@ public class Propietario extends Usuario {
         if(monto > 0) {
             Recarga recarga = new Recarga(monto, this);
             recargas.add(recarga);
-            avisar(EventosProp.CAMBIO_DATOS);
+            avisar(EventosProp.CAMBIO_DATOS); //actualizo datos propietario
+            Fachada.getInstancia().avisar(EventosSistema.CAMBIO_DATOS); //actualizo recargas pendientes
         } else  {
             throw new UsuarioException("Monto inválido");
         }
@@ -90,18 +93,44 @@ public class Propietario extends Usuario {
         avisar(EventosProp.CAMBIO_DATOS);
     }
     
-    //duda experto
-    public ArrayList<Transito> transitosDelPropietario(){
-        ArrayList<Transito> transitos = new ArrayList<>();
-        for(Vehiculo v:vehiculos){
-            v.asignarTransitos(transitos);
+    public boolean tieneBonifEnPuesto(Puesto puesto) {
+        boolean exito = false;
+        for (Bonificacion b : bonificaciones) {
+            if (puesto.equals(b.getPuesto())) {
+                exito = true;
+            }
         }
-        return transitos;        
+        return exito;
+    }
+    
+    public void enviarNotifs(Notificacion notif) {
+        notificaciones.add(notif);
+    }
+    
+    public void restarSaldo(int costo) {
+        saldo = saldo - costo;
+    }
+    
+    public void agregarBonif(Bonificacion bonif) {
+        bonificaciones.add(bonif);
+    }
+    
+    public void asignarVehiculo(Vehiculo vehiculo) {
+        vehiculos.add(vehiculo);
+    }
+    
+    public ArrayList<Recarga> recargasPendientes() {
+        ArrayList<Recarga> retorno = new ArrayList();
+        for (Recarga r : recargas) {
+            if (r.getEstado().equals("Pendiente")) {
+                retorno.add(r);
+            }
+        }
+        return retorno;
     }
     
     @Override
     public boolean validarUsuario() {
-        return super.validarUsuario() &&
-               saldo > -1;
+        return super.validarUsuario() && saldo > -1;
     }
 }
